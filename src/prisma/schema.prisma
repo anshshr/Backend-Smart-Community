@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            Int                @id @default(autoincrement())
+  email         String             @unique
+  password      String
+  username      String?            @unique
+  profileImage  String?            @default("")
+  visibility    UserVisibility?    @default(PUBLIC)
+  chatsRecv     Chat[]             @relation("Receiver")
+  chatsSent     Chat[]             @relation("Sender")
+  notifications NotificationUser[]
+  products      Product[]
+  sales         Purchase[]         @relation("Owner")
+  purchases     Purchase[]         @relation("Purchaser")
+  requests      PurchaseRequest[]
+}
+
+model Product {
+  id          Int               @id @default(autoincrement())
+  name        String
+  description String
+  images      String[]
+  latitude    Float
+  longitude   Float
+  address     String
+  price       Float
+  status      ProductStatus
+  ownerId     Int
+  chats       Chat[]
+  owner       User              @relation(fields: [ownerId], references: [id])
+  purchase    Purchase?
+  requests    PurchaseRequest[]
+}
+
+model Purchase {
+  id            Int           @id @default(autoincrement())
+  productId     Int           @unique
+  purchaserId   Int
+  ownerId       Int
+  paymentAmount Float
+  paymentMethod String
+  paymentStatus PaymentStatus
+  createdAt     DateTime      @default(now())
+  owner         User          @relation("Owner", fields: [ownerId], references: [id])
+  product       Product       @relation(fields: [productId], references: [id])
+  purchaser     User          @relation("Purchaser", fields: [purchaserId], references: [id])
+}
+
+model PurchaseRequest {
+  id          Int           @id @default(autoincrement())
+  productId   Int
+  requesterId Int
+  amount      Float
+  message     String
+  status      RequestStatus
+  createdAt   DateTime      @default(now())
+  product     Product       @relation(fields: [productId], references: [id])
+  requester   User          @relation(fields: [requesterId], references: [id])
+}
+
+model Chat {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  senderId   Int
+  receiverId Int
+  message    String
+  images     String[]
+  createdAt  DateTime @default(now())
+  product    Product  @relation(fields: [productId], references: [id])
+  receiver   User     @relation("Receiver", fields: [receiverId], references: [id])
+  sender     User     @relation("Sender", fields: [senderId], references: [id])
+}
+
+model Notification {
+  id        Int                @id @default(autoincrement())
+  title     String
+  body      String
+  images    String[]
+  createdAt DateTime           @default(now())
+  users     NotificationUser[]
+}
+
+model NotificationUser {
+  userId         Int
+  notificationId Int
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+
+  @@id([userId, notificationId])
+}
+
+enum UserVisibility {
+  PUBLIC
+  AFTER_REQUEST
+  AFTER_ACCEPT
+}
+
+enum ProductStatus {
+  AVAILABLE
+  REQUESTED
+  SOLD
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
