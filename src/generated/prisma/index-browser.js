@@ -125,6 +125,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   username: 'username',
+  FCMToken: 'FCMToken',
   profileImage: 'profileImage',
   visibility: 'visibility'
 };

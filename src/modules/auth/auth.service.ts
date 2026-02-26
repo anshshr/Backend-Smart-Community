@@ -1,17 +1,17 @@
 import { prisma } from "../../config/prisma.js";
 import type { User, UserVisibility } from "../../generated/prisma/client.js";
 import jwt from "jsonwebtoken";
-import * as bcrypt from "bcrypt";
 import { hashPassword } from "../../utils/password_hash.js";
 import "dotenv/config.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 
 export const AuthService = {
   //register user
-  async registerUser(email: string, password: string) {
+  async registerUser(email: string, password: string, FCMtoken: string) {
     const res = await prisma.user.create({
       data: {
         email: email,
+        FCMToken: FCMtoken,
         password: await hashPassword(password),
       },
     });

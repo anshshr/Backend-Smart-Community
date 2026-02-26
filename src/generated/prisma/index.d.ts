@@ -1645,6 +1645,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     username: string | null
+    FCMToken: string | null
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
   }
@@ -1654,6 +1655,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     username: string | null
+    FCMToken: string | null
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
   }
@@ -1663,6 +1665,7 @@ export namespace Prisma {
     email: number
     password: number
     username: number
+    FCMToken: number
     profileImage: number
     visibility: number
     _all: number
@@ -1682,6 +1685,7 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
+    FCMToken?: true
     profileImage?: true
     visibility?: true
   }
@@ -1691,6 +1695,7 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
+    FCMToken?: true
     profileImage?: true
     visibility?: true
   }
@@ -1700,6 +1705,7 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
+    FCMToken?: true
     profileImage?: true
     visibility?: true
     _all?: true
@@ -1796,6 +1802,7 @@ export namespace Prisma {
     email: string
     password: string
     username: string | null
+    FCMToken: string
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
     _count: UserCountAggregateOutputType | null
@@ -1824,6 +1831,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
+    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
     chatsRecv?: boolean | User$chatsRecvArgs<ExtArgs>
@@ -1841,6 +1849,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
+    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1850,6 +1859,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
+    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1859,11 +1869,12 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
+    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "username" | "profileImage" | "visibility", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "username" | "FCMToken" | "profileImage" | "visibility", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chatsRecv?: boolean | User$chatsRecvArgs<ExtArgs>
     chatsSent?: boolean | User$chatsSentArgs<ExtArgs>
@@ -1893,6 +1904,7 @@ export namespace Prisma {
       email: string
       password: string
       username: string | null
+      FCMToken: string
       profileImage: string | null
       visibility: $Enums.UserVisibility | null
     }, ExtArgs["result"]["user"]>
@@ -2329,6 +2341,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
+    readonly FCMToken: FieldRef<"User", 'String'>
     readonly profileImage: FieldRef<"User", 'String'>
     readonly visibility: FieldRef<"User", 'UserVisibility'>
   }
@@ -9782,6 +9795,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     username: 'username',
+    FCMToken: 'FCMToken',
     profileImage: 'profileImage',
     visibility: 'visibility'
   };
@@ -10016,6 +10030,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     username?: StringNullableFilter<"User"> | string | null
+    FCMToken?: StringFilter<"User"> | string
     profileImage?: StringNullableFilter<"User"> | string | null
     visibility?: EnumUserVisibilityNullableFilter<"User"> | $Enums.UserVisibility | null
     chatsRecv?: ChatListRelationFilter
@@ -10032,6 +10047,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrderInput | SortOrder
+    FCMToken?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
     chatsRecv?: ChatOrderByRelationAggregateInput
@@ -10047,6 +10063,7 @@ export namespace Prisma {
     id?: number
     email?: string
     username?: string
+    FCMToken?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -10060,13 +10077,14 @@ export namespace Prisma {
     sales?: PurchaseListRelationFilter
     purchases?: PurchaseListRelationFilter
     requests?: PurchaseRequestListRelationFilter
-  }, "id" | "email" | "username">
+  }, "id" | "email" | "username" | "FCMToken">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     username?: SortOrderInput | SortOrder
+    FCMToken?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -10084,6 +10102,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    FCMToken?: StringWithAggregatesFilter<"User"> | string
     profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     visibility?: EnumUserVisibilityNullableWithAggregatesFilter<"User"> | $Enums.UserVisibility | null
   }
@@ -10507,6 +10526,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -10523,6 +10543,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -10538,6 +10559,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -10554,6 +10576,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -10570,6 +10593,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
   }
@@ -10578,6 +10602,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
   }
@@ -10587,6 +10612,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
   }
@@ -11089,6 +11115,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
+    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -11102,6 +11129,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
+    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -11111,6 +11139,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
+    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -12860,6 +12889,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -12875,6 +12905,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -12972,6 +13003,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -12987,6 +13019,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13047,6 +13080,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13062,6 +13096,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13115,6 +13150,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13130,6 +13166,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13160,6 +13197,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13175,6 +13213,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13240,6 +13279,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13255,6 +13295,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13303,6 +13344,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13318,6 +13360,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13388,6 +13431,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13403,6 +13447,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13451,6 +13496,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
@@ -13466,6 +13512,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
@@ -13485,6 +13532,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13500,6 +13548,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13570,6 +13619,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsSent?: ChatUpdateManyWithoutSenderNestedInput
@@ -13585,6 +13635,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsSent?: ChatUncheckedUpdateManyWithoutSenderNestedInput
@@ -13610,6 +13661,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13625,6 +13677,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13693,6 +13746,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13708,6 +13762,7 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
+    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13764,6 +13819,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13779,6 +13835,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
+    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput

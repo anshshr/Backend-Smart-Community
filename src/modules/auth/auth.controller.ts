@@ -18,12 +18,17 @@ export const AuthController = {
             message:
               "Password must contain at least one uppercase, lowercase, number, and special character",
           }),
+        FCMToken: z.string(),
       });
       const result = user.safeParse(req.body);
 
       if (result.success) {
-        const { email, password } = req.body;
-        const resposne = await AuthService.registerUser(email, password);
+        const { email, password, FCMToken } = req.body;
+        const resposne = await AuthService.registerUser(
+          email,
+          password,
+          FCMToken,
+        );
 
         return res.status(200).json(resposne);
       } else {
