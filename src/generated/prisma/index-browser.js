@@ -125,7 +125,6 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   username: 'username',
-  FCMToken: 'FCMToken',
   profileImage: 'profileImage',
   visibility: 'visibility'
 };
@@ -187,6 +186,12 @@ exports.Prisma.NotificationUserScalarFieldEnum = {
   notificationId: 'notificationId'
 };
 
+exports.Prisma.FCMTokensScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -232,7 +237,8 @@ exports.Prisma.ModelName = {
   PurchaseRequest: 'PurchaseRequest',
   Chat: 'Chat',
   Notification: 'Notification',
-  NotificationUser: 'NotificationUser'
+  NotificationUser: 'NotificationUser',
+  FCMTokens: 'FCMTokens'
 };
 
 /**

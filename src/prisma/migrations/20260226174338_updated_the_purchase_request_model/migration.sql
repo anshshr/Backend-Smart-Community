@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "PurchaseRequest" ALTER COLUMN "amount" DROP NOT NULL,
+ALTER COLUMN "message" DROP NOT NULL,
+ALTER COLUMN "status" SET DEFAULT 'PENDING';

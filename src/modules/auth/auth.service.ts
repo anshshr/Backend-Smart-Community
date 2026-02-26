@@ -7,11 +7,10 @@ import type { ResponseInterface } from "../../core/interfaces/response_interface
 
 export const AuthService = {
   //register user
-  async registerUser(email: string, password: string, FCMtoken: string) {
+  async registerUser(email: string, password: string) {
     const res = await prisma.user.create({
       data: {
         email: email,
-        FCMToken: FCMtoken,
         password: await hashPassword(password),
       },
     });

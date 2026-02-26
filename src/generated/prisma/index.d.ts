@@ -48,6 +48,11 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
  * 
  */
 export type NotificationUser = $Result.DefaultSelection<Prisma.$NotificationUserPayload>
+/**
+ * Model FCMTokens
+ * 
+ */
+export type FCMTokens = $Result.DefaultSelection<Prisma.$FCMTokensPayload>
 
 /**
  * Enums
@@ -292,6 +297,16 @@ export class PrismaClient<
     * ```
     */
   get notificationUser(): Prisma.NotificationUserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fCMTokens`: Exposes CRUD operations for the **FCMTokens** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FCMTokens
+    * const fCMTokens = await prisma.fCMTokens.findMany()
+    * ```
+    */
+  get fCMTokens(): Prisma.FCMTokensDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -732,7 +747,8 @@ export namespace Prisma {
     PurchaseRequest: 'PurchaseRequest',
     Chat: 'Chat',
     Notification: 'Notification',
-    NotificationUser: 'NotificationUser'
+    NotificationUser: 'NotificationUser',
+    FCMTokens: 'FCMTokens'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -748,7 +764,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "product" | "purchase" | "purchaseRequest" | "chat" | "notification" | "notificationUser"
+      modelProps: "user" | "product" | "purchase" | "purchaseRequest" | "chat" | "notification" | "notificationUser" | "fCMTokens"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1270,6 +1286,80 @@ export namespace Prisma {
           }
         }
       }
+      FCMTokens: {
+        payload: Prisma.$FCMTokensPayload<ExtArgs>
+        fields: Prisma.FCMTokensFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FCMTokensFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FCMTokensFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          findFirst: {
+            args: Prisma.FCMTokensFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FCMTokensFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          findMany: {
+            args: Prisma.FCMTokensFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>[]
+          }
+          create: {
+            args: Prisma.FCMTokensCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          createMany: {
+            args: Prisma.FCMTokensCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FCMTokensCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>[]
+          }
+          delete: {
+            args: Prisma.FCMTokensDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          update: {
+            args: Prisma.FCMTokensUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          deleteMany: {
+            args: Prisma.FCMTokensDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FCMTokensUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FCMTokensUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>[]
+          }
+          upsert: {
+            args: Prisma.FCMTokensUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FCMTokensPayload>
+          }
+          aggregate: {
+            args: Prisma.FCMTokensAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFCMTokens>
+          }
+          groupBy: {
+            args: Prisma.FCMTokensGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FCMTokensGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FCMTokensCountArgs<ExtArgs>
+            result: $Utils.Optional<FCMTokensCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1385,6 +1475,7 @@ export namespace Prisma {
     chat?: ChatOmit
     notification?: NotificationOmit
     notificationUser?: NotificationUserOmit
+    fCMTokens?: FCMTokensOmit
   }
 
   /* Types for Logging */
@@ -1472,6 +1563,7 @@ export namespace Prisma {
     sales: number
     purchases: number
     requests: number
+    fcmtokens: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1482,6 +1574,7 @@ export namespace Prisma {
     sales?: boolean | UserCountOutputTypeCountSalesArgs
     purchases?: boolean | UserCountOutputTypeCountPurchasesArgs
     requests?: boolean | UserCountOutputTypeCountRequestsArgs
+    fcmtokens?: boolean | UserCountOutputTypeCountFcmtokensArgs
   }
 
   // Custom InputTypes
@@ -1542,6 +1635,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PurchaseRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFcmtokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FCMTokensWhereInput
   }
 
 
@@ -1645,7 +1745,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     username: string | null
-    FCMToken: string | null
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
   }
@@ -1655,7 +1754,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     username: string | null
-    FCMToken: string | null
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
   }
@@ -1665,7 +1763,6 @@ export namespace Prisma {
     email: number
     password: number
     username: number
-    FCMToken: number
     profileImage: number
     visibility: number
     _all: number
@@ -1685,7 +1782,6 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
-    FCMToken?: true
     profileImage?: true
     visibility?: true
   }
@@ -1695,7 +1791,6 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
-    FCMToken?: true
     profileImage?: true
     visibility?: true
   }
@@ -1705,7 +1800,6 @@ export namespace Prisma {
     email?: true
     password?: true
     username?: true
-    FCMToken?: true
     profileImage?: true
     visibility?: true
     _all?: true
@@ -1802,7 +1896,6 @@ export namespace Prisma {
     email: string
     password: string
     username: string | null
-    FCMToken: string
     profileImage: string | null
     visibility: $Enums.UserVisibility | null
     _count: UserCountAggregateOutputType | null
@@ -1831,7 +1924,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
-    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
     chatsRecv?: boolean | User$chatsRecvArgs<ExtArgs>
@@ -1841,6 +1933,7 @@ export namespace Prisma {
     sales?: boolean | User$salesArgs<ExtArgs>
     purchases?: boolean | User$purchasesArgs<ExtArgs>
     requests?: boolean | User$requestsArgs<ExtArgs>
+    fcmtokens?: boolean | User$fcmtokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1849,7 +1942,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
-    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1859,7 +1951,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
-    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1869,12 +1960,11 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     username?: boolean
-    FCMToken?: boolean
     profileImage?: boolean
     visibility?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "username" | "FCMToken" | "profileImage" | "visibility", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "username" | "profileImage" | "visibility", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chatsRecv?: boolean | User$chatsRecvArgs<ExtArgs>
     chatsSent?: boolean | User$chatsSentArgs<ExtArgs>
@@ -1883,6 +1973,7 @@ export namespace Prisma {
     sales?: boolean | User$salesArgs<ExtArgs>
     purchases?: boolean | User$purchasesArgs<ExtArgs>
     requests?: boolean | User$requestsArgs<ExtArgs>
+    fcmtokens?: boolean | User$fcmtokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1898,13 +1989,13 @@ export namespace Prisma {
       sales: Prisma.$PurchasePayload<ExtArgs>[]
       purchases: Prisma.$PurchasePayload<ExtArgs>[]
       requests: Prisma.$PurchaseRequestPayload<ExtArgs>[]
+      fcmtokens: Prisma.$FCMTokensPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       email: string
       password: string
       username: string | null
-      FCMToken: string
       profileImage: string | null
       visibility: $Enums.UserVisibility | null
     }, ExtArgs["result"]["user"]>
@@ -2308,6 +2399,7 @@ export namespace Prisma {
     sales<T extends User$salesArgs<ExtArgs> = {}>(args?: Subset<T, User$salesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     purchases<T extends User$purchasesArgs<ExtArgs> = {}>(args?: Subset<T, User$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requests<T extends User$requestsArgs<ExtArgs> = {}>(args?: Subset<T, User$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchaseRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    fcmtokens<T extends User$fcmtokensArgs<ExtArgs> = {}>(args?: Subset<T, User$fcmtokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2341,7 +2433,6 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
-    readonly FCMToken: FieldRef<"User", 'String'>
     readonly profileImage: FieldRef<"User", 'String'>
     readonly visibility: FieldRef<"User", 'UserVisibility'>
   }
@@ -2897,6 +2988,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PurchaseRequestScalarFieldEnum | PurchaseRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.fcmtokens
+   */
+  export type User$fcmtokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    where?: FCMTokensWhereInput
+    orderBy?: FCMTokensOrderByWithRelationInput | FCMTokensOrderByWithRelationInput[]
+    cursor?: FCMTokensWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FCMTokensScalarFieldEnum | FCMTokensScalarFieldEnum[]
   }
 
   /**
@@ -5524,8 +5639,8 @@ export namespace Prisma {
     id: number
     productId: number
     requesterId: number
-    amount: number
-    message: string
+    amount: number | null
+    message: string | null
     status: $Enums.RequestStatus
     createdAt: Date
     _count: PurchaseRequestCountAggregateOutputType | null
@@ -5619,8 +5734,8 @@ export namespace Prisma {
       id: number
       productId: number
       requesterId: number
-      amount: number
-      message: string
+      amount: number | null
+      message: string | null
       status: $Enums.RequestStatus
       createdAt: Date
     }, ExtArgs["result"]["purchaseRequest"]>
@@ -9777,6 +9892,1076 @@ export namespace Prisma {
 
 
   /**
+   * Model FCMTokens
+   */
+
+  export type AggregateFCMTokens = {
+    _count: FCMTokensCountAggregateOutputType | null
+    _avg: FCMTokensAvgAggregateOutputType | null
+    _sum: FCMTokensSumAggregateOutputType | null
+    _min: FCMTokensMinAggregateOutputType | null
+    _max: FCMTokensMaxAggregateOutputType | null
+  }
+
+  export type FCMTokensAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type FCMTokensSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type FCMTokensMinAggregateOutputType = {
+    id: number | null
+    token: string | null
+    userId: number | null
+  }
+
+  export type FCMTokensMaxAggregateOutputType = {
+    id: number | null
+    token: string | null
+    userId: number | null
+  }
+
+  export type FCMTokensCountAggregateOutputType = {
+    id: number
+    token: number
+    userId: number
+    _all: number
+  }
+
+
+  export type FCMTokensAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type FCMTokensSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type FCMTokensMinAggregateInputType = {
+    id?: true
+    token?: true
+    userId?: true
+  }
+
+  export type FCMTokensMaxAggregateInputType = {
+    id?: true
+    token?: true
+    userId?: true
+  }
+
+  export type FCMTokensCountAggregateInputType = {
+    id?: true
+    token?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type FCMTokensAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FCMTokens to aggregate.
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FCMTokens to fetch.
+     */
+    orderBy?: FCMTokensOrderByWithRelationInput | FCMTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FCMTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FCMTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FCMTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FCMTokens
+    **/
+    _count?: true | FCMTokensCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FCMTokensAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FCMTokensSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FCMTokensMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FCMTokensMaxAggregateInputType
+  }
+
+  export type GetFCMTokensAggregateType<T extends FCMTokensAggregateArgs> = {
+        [P in keyof T & keyof AggregateFCMTokens]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFCMTokens[P]>
+      : GetScalarType<T[P], AggregateFCMTokens[P]>
+  }
+
+
+
+
+  export type FCMTokensGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FCMTokensWhereInput
+    orderBy?: FCMTokensOrderByWithAggregationInput | FCMTokensOrderByWithAggregationInput[]
+    by: FCMTokensScalarFieldEnum[] | FCMTokensScalarFieldEnum
+    having?: FCMTokensScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FCMTokensCountAggregateInputType | true
+    _avg?: FCMTokensAvgAggregateInputType
+    _sum?: FCMTokensSumAggregateInputType
+    _min?: FCMTokensMinAggregateInputType
+    _max?: FCMTokensMaxAggregateInputType
+  }
+
+  export type FCMTokensGroupByOutputType = {
+    id: number
+    token: string
+    userId: number
+    _count: FCMTokensCountAggregateOutputType | null
+    _avg: FCMTokensAvgAggregateOutputType | null
+    _sum: FCMTokensSumAggregateOutputType | null
+    _min: FCMTokensMinAggregateOutputType | null
+    _max: FCMTokensMaxAggregateOutputType | null
+  }
+
+  type GetFCMTokensGroupByPayload<T extends FCMTokensGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FCMTokensGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FCMTokensGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FCMTokensGroupByOutputType[P]>
+            : GetScalarType<T[P], FCMTokensGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FCMTokensSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fCMTokens"]>
+
+  export type FCMTokensSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fCMTokens"]>
+
+  export type FCMTokensSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    token?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fCMTokens"]>
+
+  export type FCMTokensSelectScalar = {
+    id?: boolean
+    token?: boolean
+    userId?: boolean
+  }
+
+  export type FCMTokensOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "userId", ExtArgs["result"]["fCMTokens"]>
+  export type FCMTokensInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FCMTokensIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FCMTokensIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $FCMTokensPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FCMTokens"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      token: string
+      userId: number
+    }, ExtArgs["result"]["fCMTokens"]>
+    composites: {}
+  }
+
+  type FCMTokensGetPayload<S extends boolean | null | undefined | FCMTokensDefaultArgs> = $Result.GetResult<Prisma.$FCMTokensPayload, S>
+
+  type FCMTokensCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FCMTokensFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FCMTokensCountAggregateInputType | true
+    }
+
+  export interface FCMTokensDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FCMTokens'], meta: { name: 'FCMTokens' } }
+    /**
+     * Find zero or one FCMTokens that matches the filter.
+     * @param {FCMTokensFindUniqueArgs} args - Arguments to find a FCMTokens
+     * @example
+     * // Get one FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FCMTokensFindUniqueArgs>(args: SelectSubset<T, FCMTokensFindUniqueArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FCMTokens that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FCMTokensFindUniqueOrThrowArgs} args - Arguments to find a FCMTokens
+     * @example
+     * // Get one FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FCMTokensFindUniqueOrThrowArgs>(args: SelectSubset<T, FCMTokensFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FCMTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensFindFirstArgs} args - Arguments to find a FCMTokens
+     * @example
+     * // Get one FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FCMTokensFindFirstArgs>(args?: SelectSubset<T, FCMTokensFindFirstArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FCMTokens that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensFindFirstOrThrowArgs} args - Arguments to find a FCMTokens
+     * @example
+     * // Get one FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FCMTokensFindFirstOrThrowArgs>(args?: SelectSubset<T, FCMTokensFindFirstOrThrowArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FCMTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findMany()
+     * 
+     * // Get first 10 FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fCMTokensWithIdOnly = await prisma.fCMTokens.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FCMTokensFindManyArgs>(args?: SelectSubset<T, FCMTokensFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FCMTokens.
+     * @param {FCMTokensCreateArgs} args - Arguments to create a FCMTokens.
+     * @example
+     * // Create one FCMTokens
+     * const FCMTokens = await prisma.fCMTokens.create({
+     *   data: {
+     *     // ... data to create a FCMTokens
+     *   }
+     * })
+     * 
+     */
+    create<T extends FCMTokensCreateArgs>(args: SelectSubset<T, FCMTokensCreateArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FCMTokens.
+     * @param {FCMTokensCreateManyArgs} args - Arguments to create many FCMTokens.
+     * @example
+     * // Create many FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FCMTokensCreateManyArgs>(args?: SelectSubset<T, FCMTokensCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FCMTokens and returns the data saved in the database.
+     * @param {FCMTokensCreateManyAndReturnArgs} args - Arguments to create many FCMTokens.
+     * @example
+     * // Create many FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FCMTokens and only return the `id`
+     * const fCMTokensWithIdOnly = await prisma.fCMTokens.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FCMTokensCreateManyAndReturnArgs>(args?: SelectSubset<T, FCMTokensCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FCMTokens.
+     * @param {FCMTokensDeleteArgs} args - Arguments to delete one FCMTokens.
+     * @example
+     * // Delete one FCMTokens
+     * const FCMTokens = await prisma.fCMTokens.delete({
+     *   where: {
+     *     // ... filter to delete one FCMTokens
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FCMTokensDeleteArgs>(args: SelectSubset<T, FCMTokensDeleteArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FCMTokens.
+     * @param {FCMTokensUpdateArgs} args - Arguments to update one FCMTokens.
+     * @example
+     * // Update one FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FCMTokensUpdateArgs>(args: SelectSubset<T, FCMTokensUpdateArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FCMTokens.
+     * @param {FCMTokensDeleteManyArgs} args - Arguments to filter FCMTokens to delete.
+     * @example
+     * // Delete a few FCMTokens
+     * const { count } = await prisma.fCMTokens.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FCMTokensDeleteManyArgs>(args?: SelectSubset<T, FCMTokensDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FCMTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FCMTokensUpdateManyArgs>(args: SelectSubset<T, FCMTokensUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FCMTokens and returns the data updated in the database.
+     * @param {FCMTokensUpdateManyAndReturnArgs} args - Arguments to update many FCMTokens.
+     * @example
+     * // Update many FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FCMTokens and only return the `id`
+     * const fCMTokensWithIdOnly = await prisma.fCMTokens.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FCMTokensUpdateManyAndReturnArgs>(args: SelectSubset<T, FCMTokensUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FCMTokens.
+     * @param {FCMTokensUpsertArgs} args - Arguments to update or create a FCMTokens.
+     * @example
+     * // Update or create a FCMTokens
+     * const fCMTokens = await prisma.fCMTokens.upsert({
+     *   create: {
+     *     // ... data to create a FCMTokens
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FCMTokens we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FCMTokensUpsertArgs>(args: SelectSubset<T, FCMTokensUpsertArgs<ExtArgs>>): Prisma__FCMTokensClient<$Result.GetResult<Prisma.$FCMTokensPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FCMTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensCountArgs} args - Arguments to filter FCMTokens to count.
+     * @example
+     * // Count the number of FCMTokens
+     * const count = await prisma.fCMTokens.count({
+     *   where: {
+     *     // ... the filter for the FCMTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends FCMTokensCountArgs>(
+      args?: Subset<T, FCMTokensCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FCMTokensCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FCMTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FCMTokensAggregateArgs>(args: Subset<T, FCMTokensAggregateArgs>): Prisma.PrismaPromise<GetFCMTokensAggregateType<T>>
+
+    /**
+     * Group by FCMTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FCMTokensGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FCMTokensGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FCMTokensGroupByArgs['orderBy'] }
+        : { orderBy?: FCMTokensGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FCMTokensGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFCMTokensGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FCMTokens model
+   */
+  readonly fields: FCMTokensFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FCMTokens.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FCMTokensClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FCMTokens model
+   */
+  interface FCMTokensFieldRefs {
+    readonly id: FieldRef<"FCMTokens", 'Int'>
+    readonly token: FieldRef<"FCMTokens", 'String'>
+    readonly userId: FieldRef<"FCMTokens", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FCMTokens findUnique
+   */
+  export type FCMTokensFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which FCMTokens to fetch.
+     */
+    where: FCMTokensWhereUniqueInput
+  }
+
+  /**
+   * FCMTokens findUniqueOrThrow
+   */
+  export type FCMTokensFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which FCMTokens to fetch.
+     */
+    where: FCMTokensWhereUniqueInput
+  }
+
+  /**
+   * FCMTokens findFirst
+   */
+  export type FCMTokensFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which FCMTokens to fetch.
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FCMTokens to fetch.
+     */
+    orderBy?: FCMTokensOrderByWithRelationInput | FCMTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FCMTokens.
+     */
+    cursor?: FCMTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FCMTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FCMTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FCMTokens.
+     */
+    distinct?: FCMTokensScalarFieldEnum | FCMTokensScalarFieldEnum[]
+  }
+
+  /**
+   * FCMTokens findFirstOrThrow
+   */
+  export type FCMTokensFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which FCMTokens to fetch.
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FCMTokens to fetch.
+     */
+    orderBy?: FCMTokensOrderByWithRelationInput | FCMTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FCMTokens.
+     */
+    cursor?: FCMTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FCMTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FCMTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FCMTokens.
+     */
+    distinct?: FCMTokensScalarFieldEnum | FCMTokensScalarFieldEnum[]
+  }
+
+  /**
+   * FCMTokens findMany
+   */
+  export type FCMTokensFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter, which FCMTokens to fetch.
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FCMTokens to fetch.
+     */
+    orderBy?: FCMTokensOrderByWithRelationInput | FCMTokensOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FCMTokens.
+     */
+    cursor?: FCMTokensWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FCMTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FCMTokens.
+     */
+    skip?: number
+    distinct?: FCMTokensScalarFieldEnum | FCMTokensScalarFieldEnum[]
+  }
+
+  /**
+   * FCMTokens create
+   */
+  export type FCMTokensCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FCMTokens.
+     */
+    data: XOR<FCMTokensCreateInput, FCMTokensUncheckedCreateInput>
+  }
+
+  /**
+   * FCMTokens createMany
+   */
+  export type FCMTokensCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FCMTokens.
+     */
+    data: FCMTokensCreateManyInput | FCMTokensCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FCMTokens createManyAndReturn
+   */
+  export type FCMTokensCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * The data used to create many FCMTokens.
+     */
+    data: FCMTokensCreateManyInput | FCMTokensCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FCMTokens update
+   */
+  export type FCMTokensUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FCMTokens.
+     */
+    data: XOR<FCMTokensUpdateInput, FCMTokensUncheckedUpdateInput>
+    /**
+     * Choose, which FCMTokens to update.
+     */
+    where: FCMTokensWhereUniqueInput
+  }
+
+  /**
+   * FCMTokens updateMany
+   */
+  export type FCMTokensUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FCMTokens.
+     */
+    data: XOR<FCMTokensUpdateManyMutationInput, FCMTokensUncheckedUpdateManyInput>
+    /**
+     * Filter which FCMTokens to update
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * Limit how many FCMTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FCMTokens updateManyAndReturn
+   */
+  export type FCMTokensUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * The data used to update FCMTokens.
+     */
+    data: XOR<FCMTokensUpdateManyMutationInput, FCMTokensUncheckedUpdateManyInput>
+    /**
+     * Filter which FCMTokens to update
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * Limit how many FCMTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FCMTokens upsert
+   */
+  export type FCMTokensUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FCMTokens to update in case it exists.
+     */
+    where: FCMTokensWhereUniqueInput
+    /**
+     * In case the FCMTokens found by the `where` argument doesn't exist, create a new FCMTokens with this data.
+     */
+    create: XOR<FCMTokensCreateInput, FCMTokensUncheckedCreateInput>
+    /**
+     * In case the FCMTokens was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FCMTokensUpdateInput, FCMTokensUncheckedUpdateInput>
+  }
+
+  /**
+   * FCMTokens delete
+   */
+  export type FCMTokensDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+    /**
+     * Filter which FCMTokens to delete.
+     */
+    where: FCMTokensWhereUniqueInput
+  }
+
+  /**
+   * FCMTokens deleteMany
+   */
+  export type FCMTokensDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FCMTokens to delete
+     */
+    where?: FCMTokensWhereInput
+    /**
+     * Limit how many FCMTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FCMTokens without action
+   */
+  export type FCMTokensDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FCMTokens
+     */
+    select?: FCMTokensSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FCMTokens
+     */
+    omit?: FCMTokensOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FCMTokensInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9795,7 +10980,6 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     username: 'username',
-    FCMToken: 'FCMToken',
     profileImage: 'profileImage',
     visibility: 'visibility'
   };
@@ -9876,6 +11060,15 @@ export namespace Prisma {
   };
 
   export type NotificationUserScalarFieldEnum = (typeof NotificationUserScalarFieldEnum)[keyof typeof NotificationUserScalarFieldEnum]
+
+
+  export const FCMTokensScalarFieldEnum: {
+    id: 'id',
+    token: 'token',
+    userId: 'userId'
+  };
+
+  export type FCMTokensScalarFieldEnum = (typeof FCMTokensScalarFieldEnum)[keyof typeof FCMTokensScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10030,7 +11223,6 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     username?: StringNullableFilter<"User"> | string | null
-    FCMToken?: StringFilter<"User"> | string
     profileImage?: StringNullableFilter<"User"> | string | null
     visibility?: EnumUserVisibilityNullableFilter<"User"> | $Enums.UserVisibility | null
     chatsRecv?: ChatListRelationFilter
@@ -10040,6 +11232,7 @@ export namespace Prisma {
     sales?: PurchaseListRelationFilter
     purchases?: PurchaseListRelationFilter
     requests?: PurchaseRequestListRelationFilter
+    fcmtokens?: FCMTokensListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10047,7 +11240,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrderInput | SortOrder
-    FCMToken?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
     chatsRecv?: ChatOrderByRelationAggregateInput
@@ -10057,13 +11249,13 @@ export namespace Prisma {
     sales?: PurchaseOrderByRelationAggregateInput
     purchases?: PurchaseOrderByRelationAggregateInput
     requests?: PurchaseRequestOrderByRelationAggregateInput
+    fcmtokens?: FCMTokensOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
     username?: string
-    FCMToken?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -10077,14 +11269,14 @@ export namespace Prisma {
     sales?: PurchaseListRelationFilter
     purchases?: PurchaseListRelationFilter
     requests?: PurchaseRequestListRelationFilter
-  }, "id" | "email" | "username" | "FCMToken">
+    fcmtokens?: FCMTokensListRelationFilter
+  }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     username?: SortOrderInput | SortOrder
-    FCMToken?: SortOrder
     profileImage?: SortOrderInput | SortOrder
     visibility?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -10102,7 +11294,6 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
-    FCMToken?: StringWithAggregatesFilter<"User"> | string
     profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     visibility?: EnumUserVisibilityNullableWithAggregatesFilter<"User"> | $Enums.UserVisibility | null
   }
@@ -10283,8 +11474,8 @@ export namespace Prisma {
     id?: IntFilter<"PurchaseRequest"> | number
     productId?: IntFilter<"PurchaseRequest"> | number
     requesterId?: IntFilter<"PurchaseRequest"> | number
-    amount?: FloatFilter<"PurchaseRequest"> | number
-    message?: StringFilter<"PurchaseRequest"> | string
+    amount?: FloatNullableFilter<"PurchaseRequest"> | number | null
+    message?: StringNullableFilter<"PurchaseRequest"> | string | null
     status?: EnumRequestStatusFilter<"PurchaseRequest"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"PurchaseRequest"> | Date | string
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
@@ -10295,8 +11486,8 @@ export namespace Prisma {
     id?: SortOrder
     productId?: SortOrder
     requesterId?: SortOrder
-    amount?: SortOrder
-    message?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     product?: ProductOrderByWithRelationInput
@@ -10310,8 +11501,8 @@ export namespace Prisma {
     NOT?: PurchaseRequestWhereInput | PurchaseRequestWhereInput[]
     productId?: IntFilter<"PurchaseRequest"> | number
     requesterId?: IntFilter<"PurchaseRequest"> | number
-    amount?: FloatFilter<"PurchaseRequest"> | number
-    message?: StringFilter<"PurchaseRequest"> | string
+    amount?: FloatNullableFilter<"PurchaseRequest"> | number | null
+    message?: StringNullableFilter<"PurchaseRequest"> | string | null
     status?: EnumRequestStatusFilter<"PurchaseRequest"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"PurchaseRequest"> | Date | string
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
@@ -10322,8 +11513,8 @@ export namespace Prisma {
     id?: SortOrder
     productId?: SortOrder
     requesterId?: SortOrder
-    amount?: SortOrder
-    message?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     _count?: PurchaseRequestCountOrderByAggregateInput
@@ -10340,8 +11531,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"PurchaseRequest"> | number
     productId?: IntWithAggregatesFilter<"PurchaseRequest"> | number
     requesterId?: IntWithAggregatesFilter<"PurchaseRequest"> | number
-    amount?: FloatWithAggregatesFilter<"PurchaseRequest"> | number
-    message?: StringWithAggregatesFilter<"PurchaseRequest"> | string
+    amount?: FloatNullableWithAggregatesFilter<"PurchaseRequest"> | number | null
+    message?: StringNullableWithAggregatesFilter<"PurchaseRequest"> | string | null
     status?: EnumRequestStatusWithAggregatesFilter<"PurchaseRequest"> | $Enums.RequestStatus
     createdAt?: DateTimeWithAggregatesFilter<"PurchaseRequest"> | Date | string
   }
@@ -10522,11 +11713,57 @@ export namespace Prisma {
     notificationId?: IntWithAggregatesFilter<"NotificationUser"> | number
   }
 
+  export type FCMTokensWhereInput = {
+    AND?: FCMTokensWhereInput | FCMTokensWhereInput[]
+    OR?: FCMTokensWhereInput[]
+    NOT?: FCMTokensWhereInput | FCMTokensWhereInput[]
+    id?: IntFilter<"FCMTokens"> | number
+    token?: StringFilter<"FCMTokens"> | string
+    userId?: IntFilter<"FCMTokens"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type FCMTokensOrderByWithRelationInput = {
+    id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type FCMTokensWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: FCMTokensWhereInput | FCMTokensWhereInput[]
+    OR?: FCMTokensWhereInput[]
+    NOT?: FCMTokensWhereInput | FCMTokensWhereInput[]
+    token?: StringFilter<"FCMTokens"> | string
+    userId?: IntFilter<"FCMTokens"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type FCMTokensOrderByWithAggregationInput = {
+    id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+    _count?: FCMTokensCountOrderByAggregateInput
+    _avg?: FCMTokensAvgOrderByAggregateInput
+    _max?: FCMTokensMaxOrderByAggregateInput
+    _min?: FCMTokensMinOrderByAggregateInput
+    _sum?: FCMTokensSumOrderByAggregateInput
+  }
+
+  export type FCMTokensScalarWhereWithAggregatesInput = {
+    AND?: FCMTokensScalarWhereWithAggregatesInput | FCMTokensScalarWhereWithAggregatesInput[]
+    OR?: FCMTokensScalarWhereWithAggregatesInput[]
+    NOT?: FCMTokensScalarWhereWithAggregatesInput | FCMTokensScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FCMTokens"> | number
+    token?: StringWithAggregatesFilter<"FCMTokens"> | string
+    userId?: IntWithAggregatesFilter<"FCMTokens"> | number
+  }
+
   export type UserCreateInput = {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -10536,6 +11773,7 @@ export namespace Prisma {
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10543,7 +11781,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -10553,13 +11790,13 @@ export namespace Prisma {
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -10569,6 +11806,7 @@ export namespace Prisma {
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10576,7 +11814,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -10586,6 +11823,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10593,7 +11831,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
   }
@@ -10602,7 +11839,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
   }
@@ -10612,7 +11848,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
   }
@@ -10788,9 +12023,9 @@ export namespace Prisma {
   }
 
   export type PurchaseRequestCreateInput = {
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
     product: ProductCreateNestedOneWithoutRequestsInput
     requester: UserCreateNestedOneWithoutRequestsInput
@@ -10800,15 +12035,15 @@ export namespace Prisma {
     id?: number
     productId: number
     requesterId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
   }
 
   export type PurchaseRequestUpdateInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: ProductUpdateOneRequiredWithoutRequestsNestedInput
@@ -10819,8 +12054,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
     requesterId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10829,15 +12064,15 @@ export namespace Prisma {
     id?: number
     productId: number
     requesterId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
   }
 
   export type PurchaseRequestUpdateManyMutationInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10846,8 +12081,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
     requesterId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11007,6 +12242,44 @@ export namespace Prisma {
     notificationId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type FCMTokensCreateInput = {
+    token: string
+    user: UserCreateNestedOneWithoutFcmtokensInput
+  }
+
+  export type FCMTokensUncheckedCreateInput = {
+    id?: number
+    token: string
+    userId: number
+  }
+
+  export type FCMTokensUpdateInput = {
+    token?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutFcmtokensNestedInput
+  }
+
+  export type FCMTokensUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type FCMTokensCreateManyInput = {
+    id?: number
+    token: string
+    userId: number
+  }
+
+  export type FCMTokensUpdateManyMutationInput = {
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FCMTokensUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11085,6 +12358,12 @@ export namespace Prisma {
     none?: PurchaseRequestWhereInput
   }
 
+  export type FCMTokensListRelationFilter = {
+    every?: FCMTokensWhereInput
+    some?: FCMTokensWhereInput
+    none?: FCMTokensWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -11110,12 +12389,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type FCMTokensOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
-    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -11129,7 +12411,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
-    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -11139,7 +12420,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     username?: SortOrder
-    FCMToken?: SortOrder
     profileImage?: SortOrder
     visibility?: SortOrder
   }
@@ -11421,6 +12701,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type EnumRequestStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.RequestStatus | EnumRequestStatusFieldRefInput<$PrismaModel>
     in?: $Enums.RequestStatus[] | ListEnumRequestStatusFieldRefInput<$PrismaModel>
@@ -11470,6 +12761,22 @@ export namespace Prisma {
     productId?: SortOrder
     requesterId?: SortOrder
     amount?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type EnumRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -11589,6 +12896,34 @@ export namespace Prisma {
     notificationId?: SortOrder
   }
 
+  export type FCMTokensCountOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FCMTokensAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FCMTokensMaxOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FCMTokensMinOrderByAggregateInput = {
+    id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FCMTokensSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
   export type ChatCreateNestedManyWithoutReceiverInput = {
     create?: XOR<ChatCreateWithoutReceiverInput, ChatUncheckedCreateWithoutReceiverInput> | ChatCreateWithoutReceiverInput[] | ChatUncheckedCreateWithoutReceiverInput[]
     connectOrCreate?: ChatCreateOrConnectWithoutReceiverInput | ChatCreateOrConnectWithoutReceiverInput[]
@@ -11638,6 +12973,13 @@ export namespace Prisma {
     connect?: PurchaseRequestWhereUniqueInput | PurchaseRequestWhereUniqueInput[]
   }
 
+  export type FCMTokensCreateNestedManyWithoutUserInput = {
+    create?: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput> | FCMTokensCreateWithoutUserInput[] | FCMTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FCMTokensCreateOrConnectWithoutUserInput | FCMTokensCreateOrConnectWithoutUserInput[]
+    createMany?: FCMTokensCreateManyUserInputEnvelope
+    connect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+  }
+
   export type ChatUncheckedCreateNestedManyWithoutReceiverInput = {
     create?: XOR<ChatCreateWithoutReceiverInput, ChatUncheckedCreateWithoutReceiverInput> | ChatCreateWithoutReceiverInput[] | ChatUncheckedCreateWithoutReceiverInput[]
     connectOrCreate?: ChatCreateOrConnectWithoutReceiverInput | ChatCreateOrConnectWithoutReceiverInput[]
@@ -11685,6 +13027,13 @@ export namespace Prisma {
     connectOrCreate?: PurchaseRequestCreateOrConnectWithoutRequesterInput | PurchaseRequestCreateOrConnectWithoutRequesterInput[]
     createMany?: PurchaseRequestCreateManyRequesterInputEnvelope
     connect?: PurchaseRequestWhereUniqueInput | PurchaseRequestWhereUniqueInput[]
+  }
+
+  export type FCMTokensUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput> | FCMTokensCreateWithoutUserInput[] | FCMTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FCMTokensCreateOrConnectWithoutUserInput | FCMTokensCreateOrConnectWithoutUserInput[]
+    createMany?: FCMTokensCreateManyUserInputEnvelope
+    connect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11797,6 +13146,20 @@ export namespace Prisma {
     deleteMany?: PurchaseRequestScalarWhereInput | PurchaseRequestScalarWhereInput[]
   }
 
+  export type FCMTokensUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput> | FCMTokensCreateWithoutUserInput[] | FCMTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FCMTokensCreateOrConnectWithoutUserInput | FCMTokensCreateOrConnectWithoutUserInput[]
+    upsert?: FCMTokensUpsertWithWhereUniqueWithoutUserInput | FCMTokensUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FCMTokensCreateManyUserInputEnvelope
+    set?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    disconnect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    delete?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    connect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    update?: FCMTokensUpdateWithWhereUniqueWithoutUserInput | FCMTokensUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FCMTokensUpdateManyWithWhereWithoutUserInput | FCMTokensUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FCMTokensScalarWhereInput | FCMTokensScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11901,6 +13264,20 @@ export namespace Prisma {
     update?: PurchaseRequestUpdateWithWhereUniqueWithoutRequesterInput | PurchaseRequestUpdateWithWhereUniqueWithoutRequesterInput[]
     updateMany?: PurchaseRequestUpdateManyWithWhereWithoutRequesterInput | PurchaseRequestUpdateManyWithWhereWithoutRequesterInput[]
     deleteMany?: PurchaseRequestScalarWhereInput | PurchaseRequestScalarWhereInput[]
+  }
+
+  export type FCMTokensUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput> | FCMTokensCreateWithoutUserInput[] | FCMTokensUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FCMTokensCreateOrConnectWithoutUserInput | FCMTokensCreateOrConnectWithoutUserInput[]
+    upsert?: FCMTokensUpsertWithWhereUniqueWithoutUserInput | FCMTokensUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FCMTokensCreateManyUserInputEnvelope
+    set?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    disconnect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    delete?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    connect?: FCMTokensWhereUniqueInput | FCMTokensWhereUniqueInput[]
+    update?: FCMTokensUpdateWithWhereUniqueWithoutUserInput | FCMTokensUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FCMTokensUpdateManyWithWhereWithoutUserInput | FCMTokensUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FCMTokensScalarWhereInput | FCMTokensScalarWhereInput[]
   }
 
   export type ProductCreateimagesInput = {
@@ -12116,6 +13493,14 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumRequestStatusFieldUpdateOperationsInput = {
     set?: $Enums.RequestStatus
   }
@@ -12264,6 +13649,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutNotificationsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserCreateNestedOneWithoutFcmtokensInput = {
+    create?: XOR<UserCreateWithoutFcmtokensInput, UserUncheckedCreateWithoutFcmtokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFcmtokensInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutFcmtokensNestedInput = {
+    create?: XOR<UserCreateWithoutFcmtokensInput, UserUncheckedCreateWithoutFcmtokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFcmtokensInput
+    upsert?: UserUpsertWithoutFcmtokensInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFcmtokensInput, UserUpdateWithoutFcmtokensInput>, UserUncheckedUpdateWithoutFcmtokensInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -12469,11 +13868,38 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumRequestStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.RequestStatus | EnumRequestStatusFieldRefInput<$PrismaModel>
     in?: $Enums.RequestStatus[] | ListEnumRequestStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.RequestStatus[] | ListEnumRequestStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumRequestStatusFilter<$PrismaModel> | $Enums.RequestStatus
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -12656,9 +14082,9 @@ export namespace Prisma {
   }
 
   export type PurchaseRequestCreateWithoutRequesterInput = {
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
     product: ProductCreateNestedOneWithoutRequestsInput
   }
@@ -12666,9 +14092,9 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedCreateWithoutRequesterInput = {
     id?: number
     productId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
   }
 
@@ -12679,6 +14105,25 @@ export namespace Prisma {
 
   export type PurchaseRequestCreateManyRequesterInputEnvelope = {
     data: PurchaseRequestCreateManyRequesterInput | PurchaseRequestCreateManyRequesterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FCMTokensCreateWithoutUserInput = {
+    token: string
+  }
+
+  export type FCMTokensUncheckedCreateWithoutUserInput = {
+    id?: number
+    token: string
+  }
+
+  export type FCMTokensCreateOrConnectWithoutUserInput = {
+    where: FCMTokensWhereUniqueInput
+    create: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput>
+  }
+
+  export type FCMTokensCreateManyUserInputEnvelope = {
+    data: FCMTokensCreateManyUserInput | FCMTokensCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12852,10 +14297,35 @@ export namespace Prisma {
     id?: IntFilter<"PurchaseRequest"> | number
     productId?: IntFilter<"PurchaseRequest"> | number
     requesterId?: IntFilter<"PurchaseRequest"> | number
-    amount?: FloatFilter<"PurchaseRequest"> | number
-    message?: StringFilter<"PurchaseRequest"> | string
+    amount?: FloatNullableFilter<"PurchaseRequest"> | number | null
+    message?: StringNullableFilter<"PurchaseRequest"> | string | null
     status?: EnumRequestStatusFilter<"PurchaseRequest"> | $Enums.RequestStatus
     createdAt?: DateTimeFilter<"PurchaseRequest"> | Date | string
+  }
+
+  export type FCMTokensUpsertWithWhereUniqueWithoutUserInput = {
+    where: FCMTokensWhereUniqueInput
+    update: XOR<FCMTokensUpdateWithoutUserInput, FCMTokensUncheckedUpdateWithoutUserInput>
+    create: XOR<FCMTokensCreateWithoutUserInput, FCMTokensUncheckedCreateWithoutUserInput>
+  }
+
+  export type FCMTokensUpdateWithWhereUniqueWithoutUserInput = {
+    where: FCMTokensWhereUniqueInput
+    data: XOR<FCMTokensUpdateWithoutUserInput, FCMTokensUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FCMTokensUpdateManyWithWhereWithoutUserInput = {
+    where: FCMTokensScalarWhereInput
+    data: XOR<FCMTokensUpdateManyMutationInput, FCMTokensUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FCMTokensScalarWhereInput = {
+    AND?: FCMTokensScalarWhereInput | FCMTokensScalarWhereInput[]
+    OR?: FCMTokensScalarWhereInput[]
+    NOT?: FCMTokensScalarWhereInput | FCMTokensScalarWhereInput[]
+    id?: IntFilter<"FCMTokens"> | number
+    token?: StringFilter<"FCMTokens"> | string
+    userId?: IntFilter<"FCMTokens"> | number
   }
 
   export type ChatCreateWithoutProductInput = {
@@ -12889,7 +14359,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -12898,6 +14367,7 @@ export namespace Prisma {
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProductsInput = {
@@ -12905,7 +14375,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -12914,6 +14383,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProductsInput = {
@@ -12946,9 +14416,9 @@ export namespace Prisma {
   }
 
   export type PurchaseRequestCreateWithoutProductInput = {
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
     requester: UserCreateNestedOneWithoutRequestsInput
   }
@@ -12956,9 +14426,9 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedCreateWithoutProductInput = {
     id?: number
     requesterId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
   }
 
@@ -13003,7 +14473,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13012,6 +14481,7 @@ export namespace Prisma {
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProductsInput = {
@@ -13019,7 +14489,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13028,6 +14497,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PurchaseUpsertWithoutProductInput = {
@@ -13080,7 +14550,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13089,6 +14558,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSalesInput = {
@@ -13096,7 +14566,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13105,6 +14574,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSalesInput = {
@@ -13150,7 +14620,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13159,6 +14628,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutOwnerInput
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPurchasesInput = {
@@ -13166,7 +14636,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13175,6 +14644,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPurchasesInput = {
@@ -13197,7 +14667,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13206,6 +14675,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSalesInput = {
@@ -13213,7 +14683,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13222,6 +14691,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductUpsertWithoutPurchaseInput = {
@@ -13279,7 +14749,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13288,6 +14757,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutOwnerNestedInput
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPurchasesInput = {
@@ -13295,7 +14765,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13304,6 +14773,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductCreateWithoutRequestsInput = {
@@ -13344,7 +14814,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13353,6 +14822,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutOwnerInput
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -13360,7 +14830,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13369,6 +14838,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -13431,7 +14901,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13440,6 +14909,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutOwnerNestedInput
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -13447,7 +14917,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13456,6 +14925,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductCreateWithoutChatsInput = {
@@ -13496,7 +14966,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
@@ -13505,6 +14974,7 @@ export namespace Prisma {
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatsRecvInput = {
@@ -13512,7 +14982,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
@@ -13521,6 +14990,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatsRecvInput = {
@@ -13532,7 +15002,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13541,6 +15010,7 @@ export namespace Prisma {
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatsSentInput = {
@@ -13548,7 +15018,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13557,6 +15026,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatsSentInput = {
@@ -13619,7 +15089,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsSent?: ChatUpdateManyWithoutSenderNestedInput
@@ -13628,6 +15097,7 @@ export namespace Prisma {
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatsRecvInput = {
@@ -13635,7 +15105,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsSent?: ChatUncheckedUpdateManyWithoutSenderNestedInput
@@ -13644,6 +15113,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutChatsSentInput = {
@@ -13661,7 +15131,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13670,6 +15139,7 @@ export namespace Prisma {
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatsSentInput = {
@@ -13677,7 +15147,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
@@ -13686,6 +15155,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NotificationUserCreateWithoutNotificationInput = {
@@ -13746,7 +15216,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
@@ -13755,6 +15224,7 @@ export namespace Prisma {
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -13762,7 +15232,6 @@ export namespace Prisma {
     email: string
     password: string
     username?: string | null
-    FCMToken?: string
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
@@ -13771,6 +15240,7 @@ export namespace Prisma {
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
     purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+    fcmtokens?: FCMTokensUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -13819,7 +15289,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
@@ -13828,6 +15297,7 @@ export namespace Prisma {
     sales?: PurchaseUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
     requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -13835,11 +15305,89 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
-    FCMToken?: StringFieldUpdateOperationsInput | string
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
     chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
     chatsSent?: ChatUncheckedUpdateManyWithoutSenderNestedInput
+    products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
+    sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
+    requests?: PurchaseRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    fcmtokens?: FCMTokensUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutFcmtokensInput = {
+    email: string
+    password: string
+    username?: string | null
+    profileImage?: string | null
+    visibility?: $Enums.UserVisibility | null
+    chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
+    chatsSent?: ChatCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUserCreateNestedManyWithoutUserInput
+    products?: ProductCreateNestedManyWithoutOwnerInput
+    sales?: PurchaseCreateNestedManyWithoutOwnerInput
+    purchases?: PurchaseCreateNestedManyWithoutPurchaserInput
+    requests?: PurchaseRequestCreateNestedManyWithoutRequesterInput
+  }
+
+  export type UserUncheckedCreateWithoutFcmtokensInput = {
+    id?: number
+    email: string
+    password: string
+    username?: string | null
+    profileImage?: string | null
+    visibility?: $Enums.UserVisibility | null
+    chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
+    chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUserUncheckedCreateNestedManyWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
+    sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutPurchaserInput
+    requests?: PurchaseRequestUncheckedCreateNestedManyWithoutRequesterInput
+  }
+
+  export type UserCreateOrConnectWithoutFcmtokensInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFcmtokensInput, UserUncheckedCreateWithoutFcmtokensInput>
+  }
+
+  export type UserUpsertWithoutFcmtokensInput = {
+    update: XOR<UserUpdateWithoutFcmtokensInput, UserUncheckedUpdateWithoutFcmtokensInput>
+    create: XOR<UserCreateWithoutFcmtokensInput, UserUncheckedCreateWithoutFcmtokensInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFcmtokensInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFcmtokensInput, UserUncheckedUpdateWithoutFcmtokensInput>
+  }
+
+  export type UserUpdateWithoutFcmtokensInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
+    chatsRecv?: ChatUpdateManyWithoutReceiverNestedInput
+    chatsSent?: ChatUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUserUpdateManyWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutOwnerNestedInput
+    sales?: PurchaseUpdateManyWithoutOwnerNestedInput
+    purchases?: PurchaseUpdateManyWithoutPurchaserNestedInput
+    requests?: PurchaseRequestUpdateManyWithoutRequesterNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFcmtokensInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    visibility?: NullableEnumUserVisibilityFieldUpdateOperationsInput | $Enums.UserVisibility | null
+    chatsRecv?: ChatUncheckedUpdateManyWithoutReceiverNestedInput
+    chatsSent?: ChatUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUserUncheckedUpdateManyWithoutUserNestedInput
     products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
     sales?: PurchaseUncheckedUpdateManyWithoutOwnerNestedInput
     purchases?: PurchaseUncheckedUpdateManyWithoutPurchaserNestedInput
@@ -13903,10 +15451,15 @@ export namespace Prisma {
   export type PurchaseRequestCreateManyRequesterInput = {
     id?: number
     productId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
+  }
+
+  export type FCMTokensCreateManyUserInput = {
+    id?: number
+    token: string
   }
 
   export type ChatUpdateWithoutReceiverInput = {
@@ -14073,8 +15626,8 @@ export namespace Prisma {
   }
 
   export type PurchaseRequestUpdateWithoutRequesterInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     product?: ProductUpdateOneRequiredWithoutRequestsNestedInput
@@ -14083,8 +15636,8 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedUpdateWithoutRequesterInput = {
     id?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14092,10 +15645,24 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedUpdateManyWithoutRequesterInput = {
     id?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FCMTokensUpdateWithoutUserInput = {
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FCMTokensUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FCMTokensUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    token?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChatCreateManyProductInput = {
@@ -14110,9 +15677,9 @@ export namespace Prisma {
   export type PurchaseRequestCreateManyProductInput = {
     id?: number
     requesterId: number
-    amount: number
-    message: string
-    status: $Enums.RequestStatus
+    amount?: number | null
+    message?: string | null
+    status?: $Enums.RequestStatus
     createdAt?: Date | string
   }
 
@@ -14143,8 +15710,8 @@ export namespace Prisma {
   }
 
   export type PurchaseRequestUpdateWithoutProductInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requester?: UserUpdateOneRequiredWithoutRequestsNestedInput
@@ -14153,8 +15720,8 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedUpdateWithoutProductInput = {
     id?: IntFieldUpdateOperationsInput | number
     requesterId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14162,8 +15729,8 @@ export namespace Prisma {
   export type PurchaseRequestUncheckedUpdateManyWithoutProductInput = {
     id?: IntFieldUpdateOperationsInput | number
     requesterId?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
