@@ -11860,7 +11860,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     chats?: ChatCreateNestedManyWithoutProductInput
     owner: UserCreateNestedOneWithoutProductsInput
     purchase?: PurchaseCreateNestedOneWithoutProductInput
@@ -11876,7 +11876,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     ownerId: number
     chats?: ChatUncheckedCreateNestedManyWithoutProductInput
     purchase?: PurchaseUncheckedCreateNestedOneWithoutProductInput
@@ -11923,7 +11923,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     ownerId: number
   }
 
@@ -13992,7 +13992,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     chats?: ChatCreateNestedManyWithoutProductInput
     purchase?: PurchaseCreateNestedOneWithoutProductInput
     requests?: PurchaseRequestCreateNestedManyWithoutProductInput
@@ -14007,7 +14007,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     chats?: ChatUncheckedCreateNestedManyWithoutProductInput
     purchase?: PurchaseUncheckedCreateNestedOneWithoutProductInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutProductInput
@@ -14590,7 +14590,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     chats?: ChatCreateNestedManyWithoutProductInput
     owner: UserCreateNestedOneWithoutProductsInput
     requests?: PurchaseRequestCreateNestedManyWithoutProductInput
@@ -14605,7 +14605,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     ownerId: number
     chats?: ChatUncheckedCreateNestedManyWithoutProductInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutProductInput
@@ -14784,7 +14784,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     chats?: ChatCreateNestedManyWithoutProductInput
     owner: UserCreateNestedOneWithoutProductsInput
     purchase?: PurchaseCreateNestedOneWithoutProductInput
@@ -14799,7 +14799,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     ownerId: number
     chats?: ChatUncheckedCreateNestedManyWithoutProductInput
     purchase?: PurchaseUncheckedCreateNestedOneWithoutProductInput
@@ -14936,7 +14936,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     owner: UserCreateNestedOneWithoutProductsInput
     purchase?: PurchaseCreateNestedOneWithoutProductInput
     requests?: PurchaseRequestCreateNestedManyWithoutProductInput
@@ -14951,7 +14951,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
     ownerId: number
     purchase?: PurchaseUncheckedCreateNestedOneWithoutProductInput
     requests?: PurchaseRequestUncheckedCreateNestedManyWithoutProductInput
@@ -15425,7 +15425,7 @@ export namespace Prisma {
     longitude: number
     address: string
     price: number
-    status: $Enums.ProductStatus
+    status?: $Enums.ProductStatus
   }
 
   export type PurchaseCreateManyOwnerInput = {

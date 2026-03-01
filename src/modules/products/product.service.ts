@@ -1,14 +1,15 @@
 import { prisma } from "../../config/prisma.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
-import type {
-  PaymentStatus,
-  Product,
+import {
   ProductStatus,
-  Purchase,
-  PurchaseRequest,
-  RequestStatus,
+  type PaymentStatus,
+  type Product,
+  type Purchase,
+  type PurchaseRequest,
+  type RequestStatus,
 } from "../../generated/prisma/index.js";
+import type { ProductDTO } from "./product.types.js";
 
 export const ProductService = {
   // get all the products
@@ -35,7 +36,7 @@ export const ProductService = {
   // get a product with a particular id
   async getByParticularId(id: number) {
     const product = await prisma.product.findUnique({
-      where: { id },
+      where: { id: id },
       include: {
         requests: true,
         purchase: true,
@@ -129,12 +130,20 @@ export const ProductService = {
     return response;
   },
   // create a product
-  async createProduct(product: Product) {
+  async createProduct(product: ProductDTO, ownerId: number) {
     const result = await prisma.product.create({
-      data: product,
+      data: {
+        name: product.name,
+        address: product.address,
+        description: product.description,
+        latitude: product.latitude,
+        longitude: product.longitude,
+        price: product.price,
+        ownerId: ownerId,
+      },
     });
 
-    const response: ResponseInterface<{ Product: Product }> = {
+    const response: ResponseInterface<{ Product: ProductDTO }> = {
       message: "Product Created Succesfully",
       status: 1,
       data: {
@@ -161,6 +170,15 @@ export const ProductService = {
 
     const result = await prisma.purchaseRequest.create({
       data: data,
+    });
+
+    await prisma.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        status: ProductStatus.REQUESTED,
+      },
     });
 
     const response: ResponseInterface<{ request: PurchaseRequest }> = {
