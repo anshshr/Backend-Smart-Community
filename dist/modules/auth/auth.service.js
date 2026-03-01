@@ -1,6 +1,5 @@
 import { prisma } from "../../config/prisma.js";
 import jwt from "jsonwebtoken";
-import * as bcrypt from "bcrypt";
 import { hashPassword } from "../../utils/password_hash.js";
 import "dotenv/config.js";
 export const AuthService = {

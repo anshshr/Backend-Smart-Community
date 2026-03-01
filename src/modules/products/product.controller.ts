@@ -3,7 +3,7 @@ import {
   PaymentStatus,
   ProductStatus,
   RequestStatus,
-} from "../../generated/prisma/index.js";
+} from "../../generated/prisma/client.js";
 import { ProductService } from "./product.service.js";
 import type { Request, Response } from "express";
 import * as z from "zod";
@@ -98,7 +98,7 @@ export const ProductController = {
       const data = z.object({
         minPrice: z.coerce.number(),
         maxPrice: z.coerce.number(),
-        status: z.nativeEnum(ProductStatus),
+        status: z.enum(ProductStatus),
       });
 
       const result = data.safeParse(req.query);
@@ -311,7 +311,7 @@ export const ProductController = {
         ownerId: z.number(),
       });
 
-      const result = owner.safeParse(req.body);
+      const result = owner.safeParse(req.query);
 
       if (result.success) {
         const { ownerId } = result.data;
@@ -340,7 +340,7 @@ export const ProductController = {
         id: z.number(),
       });
 
-      const result = owner.safeParse(req.body);
+      const result = owner.safeParse(req.query);
 
       if (result.success) {
         const { id } = result.data;

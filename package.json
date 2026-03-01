@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsc -b && npx node dist/server.js"
+    "dev": "npx tsc -b && node dist/server.js"
   },
   "keywords": [],
   "author": "",

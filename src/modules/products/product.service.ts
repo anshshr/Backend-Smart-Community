@@ -8,7 +8,7 @@ import {
   type Purchase,
   type PurchaseRequest,
   type RequestStatus,
-} from "../../generated/prisma/index.js";
+} from "../../generated/prisma/client.js";
 import type { ProductDTO } from "./product.types.js";
 
 export const ProductService = {
