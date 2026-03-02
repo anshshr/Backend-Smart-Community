@@ -1,13 +1,14 @@
 import { prisma } from "../../config/prisma.js";
+import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
 import {
   ProductStatus,
+  RequestStatus,
   type PaymentStatus,
   type Product,
   type Purchase,
   type PurchaseRequest,
-  type RequestStatus,
 } from "../../generated/prisma/client.js";
 import type { ProductDTO } from "./product.types.js";
 
@@ -140,6 +141,7 @@ export const ProductService = {
         longitude: product.longitude,
         price: product.price,
         ownerId: ownerId,
+        status: ProductStatus.AVAILABLE,
       },
     });
 
@@ -161,35 +163,114 @@ export const ProductService = {
     amount?: number,
     message?: string,
   ) {
-    const data: any = {};
-    data.productId = productId;
-    data.requesterId = requesterId;
+    try {
+      // Validate input types
+      if (!Number.isInteger(productId) || productId <= 0) {
+        const response: ResponseInterface<null> = {
+          message: "Invalid product ID",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
 
-    if (amount) data.amount = amount;
-    if (message) data.message = message;
+      if (!Number.isInteger(requesterId) || requesterId <= 0) {
+        const response: ResponseInterface<null> = {
+          message: "Invalid requester ID",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
 
-    const result = await prisma.purchaseRequest.create({
-      data: data,
-    });
+      // Validate that product exists and is available
+      const product = await prisma.product.findUnique({
+        where: { id: productId },
+      });
 
-    await prisma.product.update({
-      where: {
-        id: productId,
-      },
-      data: {
-        status: ProductStatus.REQUESTED,
-      },
-    });
+      if (!product) {
+        const response: ResponseInterface<null> = {
+          message: "Product not found",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
 
-    const response: ResponseInterface<{ request: PurchaseRequest }> = {
-      message: "Product Created Succesfully",
-      status: 1,
-      data: {
-        request: result,
-      },
-    };
+      if (product.status === ProductStatus.SOLD) {
+        const response: ResponseInterface<null> = {
+          message: "Product is already sold",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
 
-    return response;
+      // Validate that requester exists
+      const requester = await prisma.user.findUnique({
+        where: { id: requesterId },
+      });
+
+      if (!requester) {
+        const response: ResponseInterface<null> = {
+          message: "Requester not found",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
+
+      // Validate amount if provided
+      if (amount !== undefined && (amount <= 0 || isNaN(amount))) {
+        const response: ResponseInterface<null> = {
+          message: "Invalid amount provided",
+          status: 0,
+          data: null,
+        };
+        return response;
+      }
+
+      const data: any = {};
+      data.productId = productId;
+      data.requesterId = requesterId;
+
+      if (amount !== undefined && amount !== null) data.amount = amount;
+      if (message) data.message = message;
+
+      const result = await prisma.purchaseRequest.create({
+        data: data,
+      });
+      console.log("====================================");
+      console.log("Purchase request created:", result);
+      console.log("====================================");
+
+      await prisma.product.update({
+        where: {
+          id: productId,
+        },
+        data: {
+          status: ProductStatus.REQUESTED,
+        },
+      });
+
+      const response: ResponseInterface<{ request: PurchaseRequest }> = {
+        message: "Product Requested Succesfully",
+        status: 1,
+        data: {
+          request: result,
+        },
+      };
+
+      return response;
+    } catch (error) {
+      console.error("Error in requestPurchase:", error);
+      const response: ResponseInterface<string> = {
+        message: "Failed to create purchase request",
+        status: 0,
+        data: customErrorMessgae(error),
+      };
+      return response;
+    }
   },
 
   //updating the status of the request made to purchase the product

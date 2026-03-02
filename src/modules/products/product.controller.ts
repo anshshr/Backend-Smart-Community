@@ -1,3 +1,4 @@
+import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 import {
   PaymentStatus,
@@ -19,7 +20,7 @@ export const ProductController = {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -29,7 +30,7 @@ export const ProductController = {
   async getByParticularId(req: Request, res: Response) {
     try {
       const products = z.object({
-        id: z.string().transform(Number),
+        id: z.string("Please provide the product id").transform(Number),
       });
 
       const result = products.safeParse(req.params);
@@ -39,18 +40,13 @@ export const ProductController = {
         const response = await ProductService.getByParticularId(id);
         return res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: JSON.stringify(error),
       };
       return res.status(500).json(ans);
     }
@@ -59,8 +55,8 @@ export const ProductController = {
   async getNearByProducts(req: Request, res: Response) {
     try {
       const product = z.object({
-        latitude: z.coerce.number(),
-        longitude: z.coerce.number(),
+        latitude: z.coerce.number("Enter the correct value of the latitude"),
+        longitude: z.coerce.number("Enter the correct value of the longitude"),
       });
 
       const result = product.safeParse(req.query);
@@ -75,18 +71,13 @@ export const ProductController = {
 
         return res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -96,9 +87,12 @@ export const ProductController = {
   async getByFilter(req: Request, res: Response) {
     try {
       const data = z.object({
-        minPrice: z.coerce.number(),
-        maxPrice: z.coerce.number(),
-        status: z.enum(ProductStatus),
+        minPrice: z.coerce.number("Enter the correct value of the minPrice"),
+        maxPrice: z.coerce.number("Enter the correct value of the maxPrice"),
+        status: z.enum(
+          ProductStatus,
+          "Available values are  AVAILABLE  REQUESTED SOLD ",
+        ),
       });
 
       const result = data.safeParse(req.query);
@@ -112,18 +106,13 @@ export const ProductController = {
         );
         return res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -132,47 +121,46 @@ export const ProductController = {
   // create a product
   async createProduct(req: Request, res: Response) {
     try {
+      // flow aisa ho ki like jo user product creta kar rha hia uska token  leke me requet maru to crate the product
       const productSchema = z.object({
-        name: z.string(),
-        description: z.string(),
-        images: z.array(z.string()),
-        latitude: z.number(),
-        longitude: z.number(),
-        address: z.string(),
-        price: z.number(),
+        name: z.string("Please provide the correct name of the product"),
+        description: z.string("Please provide the description"),
+        images: z.array(z.string("Some error occured while parsing images")),
+        latitude: z.number("Enter the correct value of the latitude"),
+        longitude: z.number("Enter the correct value of the longitude"),
+        address: z.string("Enter the correct value of the address"),
+        price: z.number("Enter the price in the proper format"),
       });
 
       const result = productSchema.safeParse(req.body);
 
       if (result.success) {
-        const userId = (req as any).user?.id;
-        if (!userId) {
-          const ans: ResponseInterface<string> = {
-            message: "User not authenticated",
-            status: 0,
-            data: "Missing user context",
-          };
-          return res.status(401).json(ans);
-        }
+        // const userId = (req as any).user?.id;
+
+        // if (!userId) {
+        //   const ans: ResponseInterface<null> = {
+        //     message: "User not authenticated",
+        //     status: 0,
+        //   };
+        //   return res.status(401).json(ans);
+        // }
 
         const response = await ProductService.createProduct(
           result.data,
-          userId,
+          // userId,
+          10,
         );
         return res.status(201).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
+      console.log(error);
+
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -181,16 +169,24 @@ export const ProductController = {
   async requestPurchase(req: Request, res: Response) {
     try {
       const requestSchema = z.object({
-        productId: z.number(),
-        requesterId: z.number(),
-        amount: z.number().optional(),
+        productId: z.coerce.number(),
+        requesterId: z.coerce.number(),
+        amount: z.coerce.number().optional(),
         message: z.string().optional(),
       });
 
       const result = requestSchema.safeParse(req.body);
 
       if (result.success) {
+        console.log("=====================");
+        console.log(result.data);
+        console.log("====================================");
         const { productId, requesterId, amount, message } = result.data;
+
+        console.log(productId);
+        console.log(requesterId);
+        console.log(amount);
+        console.log(message);
 
         const response = await ProductService.requestPurchase(
           productId,
@@ -201,18 +197,13 @@ export const ProductController = {
 
         return res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -222,8 +213,11 @@ export const ProductController = {
   async updatePurchaseProduct(req: Request, res: Response) {
     try {
       const requetstObject = z.object({
-        UpdatedStatus: z.enum(RequestStatus),
-        productId: z.number(),
+        UpdatedStatus: z.enum(
+          RequestStatus,
+          "Available values are PENDING , ACCEPTED , REJECTED  ",
+        ),
+        productId: z.number("Please provide a productID"),
       });
 
       const result = requetstObject.safeParse(req.body);
@@ -237,18 +231,13 @@ export const ProductController = {
 
         res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -257,12 +246,15 @@ export const ProductController = {
   async purchaseProduct(req: Request, res: Response) {
     try {
       const purchaseObject = z.object({
-        productId: z.number(),
-        purchaserId: z.number(),
-        ownerId: z.number(),
-        paymentAmount: z.number(),
-        paymentMethod: z.string(),
-        paymentStatus: z.enum(PaymentStatus),
+        productId: z.number("Provide the ProductID"),
+        purchaserId: z.number("Provide the PurchaserID"),
+        ownerId: z.number("Provide the OwnerID"),
+        paymentAmount: z.number("Provide the Payment Amount "),
+        paymentMethod: z.string("Provide the Payment Method"),
+        paymentStatus: z.enum(
+          PaymentStatus,
+          "Available status are PENDING , PAID , FAILED",
+        ),
       });
 
       const result = purchaseObject.safeParse(req.body);
@@ -287,18 +279,13 @@ export const ProductController = {
 
         return res.status(200).json(response);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -308,7 +295,7 @@ export const ProductController = {
   async deleteAll(req: Request, res: Response) {
     try {
       const owner = z.object({
-        ownerId: z.number(),
+        ownerId: z.number("Provide the owner Id"),
       });
 
       const result = owner.safeParse(req.query);
@@ -317,18 +304,13 @@ export const ProductController = {
         const { ownerId } = result.data;
         const response = await ProductService.deleteAll(ownerId);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }
@@ -337,7 +319,7 @@ export const ProductController = {
   async deleteProductById(req: Request, res: Response) {
     try {
       const owner = z.object({
-        id: z.number(),
+        id: z.number("Provide the id"),
       });
 
       const result = owner.safeParse(req.query);
@@ -346,18 +328,13 @@ export const ProductController = {
         const { id } = result.data;
         const response = await ProductService.deleteAll(id);
       } else {
-        const ans: ResponseInterface<string> = {
-          message: "Invalid input",
-          status: 0,
-          data: JSON.stringify(result.error.issues),
-        };
-        return res.status(400).json(ans);
+        throw result.error;
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-        data: error as string,
+        data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);
     }

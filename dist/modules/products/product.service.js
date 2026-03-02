@@ -1,6 +1,7 @@
 import { prisma } from "../../config/prisma.js";
+import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
-import { ProductStatus, } from "../../generated/prisma/client.js";
+import { ProductStatus, RequestStatus, } from "../../generated/prisma/client.js";
 export const ProductService = {
     // get all the products
     async getAllProducts() {
@@ -115,6 +116,7 @@ export const ProductService = {
                 longitude: product.longitude,
                 price: product.price,
                 ownerId: ownerId,
+                status: ProductStatus.AVAILABLE,
             },
         });
         const response = {
@@ -128,32 +130,104 @@ export const ProductService = {
     },
     // requesting purchasing  a product and sending the notification
     async requestPurchase(productId, requesterId, amount, message) {
-        const data = {};
-        data.productId = productId;
-        data.requesterId = requesterId;
-        if (amount)
-            data.amount = amount;
-        if (message)
-            data.message = message;
-        const result = await prisma.purchaseRequest.create({
-            data: data,
-        });
-        await prisma.product.update({
-            where: {
-                id: productId,
-            },
-            data: {
-                status: ProductStatus.REQUESTED,
-            },
-        });
-        const response = {
-            message: "Product Created Succesfully",
-            status: 1,
-            data: {
-                request: result,
-            },
-        };
-        return response;
+        try {
+            // Validate input types
+            if (!Number.isInteger(productId) || productId <= 0) {
+                const response = {
+                    message: "Invalid product ID",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            if (!Number.isInteger(requesterId) || requesterId <= 0) {
+                const response = {
+                    message: "Invalid requester ID",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            // Validate that product exists and is available
+            const product = await prisma.product.findUnique({
+                where: { id: productId },
+            });
+            if (!product) {
+                const response = {
+                    message: "Product not found",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            if (product.status === ProductStatus.SOLD) {
+                const response = {
+                    message: "Product is already sold",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            // Validate that requester exists
+            const requester = await prisma.user.findUnique({
+                where: { id: requesterId },
+            });
+            if (!requester) {
+                const response = {
+                    message: "Requester not found",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            // Validate amount if provided
+            if (amount !== undefined && (amount <= 0 || isNaN(amount))) {
+                const response = {
+                    message: "Invalid amount provided",
+                    status: 0,
+                    data: null,
+                };
+                return response;
+            }
+            const data = {};
+            data.productId = productId;
+            data.requesterId = requesterId;
+            if (amount !== undefined && amount !== null)
+                data.amount = amount;
+            if (message)
+                data.message = message;
+            const result = await prisma.purchaseRequest.create({
+                data: data,
+            });
+            console.log("====================================");
+            console.log("Purchase request created:", result);
+            console.log("====================================");
+            await prisma.product.update({
+                where: {
+                    id: productId,
+                },
+                data: {
+                    status: ProductStatus.REQUESTED,
+                },
+            });
+            const response = {
+                message: "Product Requested Succesfully",
+                status: 1,
+                data: {
+                    request: result,
+                },
+            };
+            return response;
+        }
+        catch (error) {
+            console.error("Error in requestPurchase:", error);
+            const response = {
+                message: "Failed to create purchase request",
+                status: 0,
+                data: customErrorMessgae(error),
+            };
+            return response;
+        }
     },
     //updating the status of the request made to purchase the product
     async updatePurchaseProduct(UpdatedStatus, productId) {
