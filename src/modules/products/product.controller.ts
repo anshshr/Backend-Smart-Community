@@ -87,12 +87,18 @@ export const ProductController = {
   async getByFilter(req: Request, res: Response) {
     try {
       const data = z.object({
-        minPrice: z.coerce.number("Enter the correct value of the minPrice"),
-        maxPrice: z.coerce.number("Enter the correct value of the maxPrice"),
-        status: z.enum(
-          ProductStatus,
-          "Available values are  AVAILABLE  REQUESTED SOLD ",
-        ),
+        minPrice: z.coerce
+          .number("Enter the correct value of the minPrice")
+          .optional(),
+        maxPrice: z.coerce
+          .number("Enter the correct value of the maxPrice")
+          .optional(),
+        status: z
+          .enum(
+            ProductStatus,
+            "Available values are  AVAILABLE , REQUESTED , SOLD ",
+          )
+          .optional(),
       });
 
       const result = data.safeParse(req.query);
@@ -176,17 +182,8 @@ export const ProductController = {
       });
 
       const result = requestSchema.safeParse(req.body);
-
       if (result.success) {
-        console.log("=====================");
-        console.log(result.data);
-        console.log("====================================");
         const { productId, requesterId, amount, message } = result.data;
-
-        console.log(productId);
-        console.log(requesterId);
-        console.log(amount);
-        console.log(message);
 
         const response = await ProductService.requestPurchase(
           productId,
@@ -195,7 +192,11 @@ export const ProductController = {
           message,
         );
 
-        return res.status(200).json(response);
+        if (response.status) {
+          return res.status(200).json(response);
+        } else {
+          return res.status(500).json(response);
+        }
       } else {
         throw result.error;
       }
@@ -229,7 +230,11 @@ export const ProductController = {
           productId,
         );
 
-        res.status(200).json(response);
+        if (response.status) {
+          res.status(200).json(response);
+        } else {
+          res.status(500).json(response);
+        }
       } else {
         throw result.error;
       }
@@ -277,7 +282,11 @@ export const ProductController = {
           paymentStatus,
         );
 
-        return res.status(200).json(response);
+        if (response.status) {
+          return res.status(200).json(response);
+        } else {
+          res.status(500).json(response);
+        }
       } else {
         throw result.error;
       }
@@ -295,14 +304,23 @@ export const ProductController = {
   async deleteAll(req: Request, res: Response) {
     try {
       const owner = z.object({
-        ownerId: z.number("Provide the owner Id"),
+        ownerId: z.coerce.number("Provide the owner Id"),
       });
 
-      const result = owner.safeParse(req.query);
+      const result = owner.safeParse(req.params);
+      console.log("====================================");
+      console.log(req.params);
+      console.log("====================================");
 
       if (result.success) {
         const { ownerId } = result.data;
         const response = await ProductService.deleteAll(ownerId);
+
+        if (response.status) {
+          return res.status(200).json(response);
+        } else {
+          res.status(500).json(response);
+        }
       } else {
         throw result.error;
       }
@@ -318,15 +336,20 @@ export const ProductController = {
 
   async deleteProductById(req: Request, res: Response) {
     try {
-      const owner = z.object({
-        id: z.number("Provide the id"),
+      const product = z.object({
+        id: z.coerce.number("Provide the Product Id"),
       });
 
-      const result = owner.safeParse(req.query);
-
+      const result = product.safeParse(req.params);
       if (result.success) {
         const { id } = result.data;
-        const response = await ProductService.deleteAll(id);
+        const response = await ProductService.deleteProductById(id);
+
+        if (response.status) {
+          return res.status(200).json(response);
+        } else {
+          res.status(500).json(response);
+        }
       } else {
         throw result.error;
       }

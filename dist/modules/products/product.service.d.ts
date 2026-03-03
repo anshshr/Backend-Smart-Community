@@ -21,10 +21,21 @@ export declare const ProductService: {
         request: PurchaseRequest;
     }>>;
     updatePurchaseProduct(UpdatedStatus: RequestStatus, productId: number): Promise<ResponseInterface<null>>;
-    purchaseProduct(productId: number, purchaserId: number, ownerId: number, paymentAmount: number, paymentMethod: string, paymentStatus: PaymentStatus): Promise<ResponseInterface<{
+    purchaseProduct(productId: number, purchaserId: number, ownerId: number, paymentAmount: number, paymentMethod: string, paymentStatus: PaymentStatus): Promise<ResponseInterface<null> | ResponseInterface<{
         purchase: Purchase;
     }>>;
     deleteAll(ownerId: number): Promise<ResponseInterface<null>>;
-    deleteProductById(id: number): Promise<ResponseInterface<null>>;
+    deleteProductById(id: number): Promise<ResponseInterface<null> | ResponseInterface<{
+        id: number;
+        name: string;
+        description: string;
+        images: string[];
+        latitude: number;
+        longitude: number;
+        address: string;
+        price: number;
+        status: import("../../generated/prisma/index.js").$Enums.ProductStatus;
+        ownerId: number;
+    }>>;
 };
 //# sourceMappingURL=product.service.d.ts.map

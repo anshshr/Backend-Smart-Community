@@ -36,7 +36,7 @@ export function prismaErrorMessage(error) {
         return "We are unable to connect to the server right now.";
     }
     else if (error instanceof PrismaClientValidationError) {
-        return "Some fields contain invalid values.";
+        return "Some fields may be missing or contain invalid values.";
     }
     else {
         return "Something occured that we are not able to figure out but we will do it soon";

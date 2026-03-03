@@ -106,9 +106,10 @@ export const ProductService = {
 
     if (status) where.status = status;
 
-    if (minPrice && maxPrice) {
-      where.minPrice = minPrice;
-      where.maxPrice = maxPrice;
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      where.price = {};
+      if (minPrice !== undefined) where.price.gte = minPrice;
+      if (maxPrice !== undefined) where.price.lte = maxPrice;
     }
 
     const products = await prisma.product.findMany({
@@ -240,9 +241,6 @@ export const ProductService = {
       const result = await prisma.purchaseRequest.create({
         data: data,
       });
-      console.log("====================================");
-      console.log("Purchase request created:", result);
-      console.log("====================================");
 
       await prisma.product.update({
         where: {
@@ -263,7 +261,6 @@ export const ProductService = {
 
       return response;
     } catch (error) {
-      console.error("Error in requestPurchase:", error);
       const response: ResponseInterface<string> = {
         message: "Failed to create purchase request",
         status: 0,
@@ -275,21 +272,56 @@ export const ProductService = {
 
   //updating the status of the request made to purchase the product
   async updatePurchaseProduct(UpdatedStatus: RequestStatus, productId: number) {
-    const result = await prisma.purchaseRequest.updateMany({
-      where: {
-        productId: productId,
-      },
-      data: {
-        status: UpdatedStatus,
-      },
+    // Validate that product exists and is available
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
     });
 
-    const response: ResponseInterface<null> = {
-      message: "Status Updated SuccesFully",
-      status: 1,
-    };
+    if (!product) {
+      const response: ResponseInterface<null> = {
+        message: "Product not found",
+        status: 0,
+        data: null,
+      };
+      return response;
+    }
 
-    return response;
+    if (product.status === ProductStatus.SOLD) {
+      const response: ResponseInterface<null> = {
+        message: "Product is already sold",
+        status: 0,
+        data: null,
+      };
+      return response;
+    }
+    // wrong request status transition
+    if (
+      UpdatedStatus == RequestStatus.ACCEPTED ||
+      UpdatedStatus == RequestStatus.REJECTED
+    ) {
+      const result = await prisma.purchaseRequest.updateMany({
+        where: {
+          productId: productId,
+        },
+        data: {
+          status: UpdatedStatus,
+        },
+      });
+
+      const response: ResponseInterface<null> = {
+        message: "Status Updated SuccesFully",
+        status: 1,
+      };
+
+      return response;
+    } else {
+      const ans: ResponseInterface<null> = {
+        message: "Invalid Transition",
+        status: 0,
+      };
+
+      return ans;
+    }
   },
 
   // purchasing a product
@@ -302,6 +334,62 @@ export const ProductService = {
     paymentMethod: string,
     paymentStatus: PaymentStatus,
   ) {
+    // purchasing  a product that do not exist
+    const product = await prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+    if (!product || product == null) {
+      const ans: ResponseInterface<null> = {
+        message: "Product do no exist",
+        status: 0,
+      };
+
+      return ans;
+    }
+
+    // purchasing  a purchased  product
+    if (product.status == ProductStatus.SOLD) {
+      const ans: ResponseInterface<null> = {
+        message: "Product already Sold",
+        status: 0,
+      };
+      return ans;
+    }
+    // owner do not exits
+    const owner = await prisma.user.findUnique({
+      where: {
+        id: ownerId,
+      },
+    });
+    if (!owner || owner == null) {
+      const ans: ResponseInterface<null> = {
+        message: "Owner do not exist",
+        status: 0,
+      };
+    }
+    // purchaser do not exist
+    const purchaser = await prisma.user.findUnique({
+      where: {
+        id: purchaserId,
+      },
+    });
+    if (!purchaser || purchaser == null) {
+      const ans: ResponseInterface<null> = {
+        message: "Purchaser do not exist",
+        status: 0,
+      };
+    }
+    // owner and the purhaser id cannot be same
+    if (ownerId == purchaserId) {
+      const ans: ResponseInterface<null> = {
+        message: "Owner and the Purchaser cannot be same",
+        status: 0,
+      };
+      return ans;
+    }
+
     const result = await prisma.purchase.create({
       data: {
         productId: productId,
@@ -326,6 +414,20 @@ export const ProductService = {
 
   //delete all product
   async deleteAll(ownerId: number) {
+    const owner = await prisma.user.findUnique({
+      where: {
+        id: ownerId,
+      },
+    });
+
+    // owner do not exist
+    if (!owner || owner == null) {
+      const ans: ResponseInterface<null> = {
+        message: "Owner do not exist",
+        status: 0,
+      };
+    }
+
     const result = await prisma.product.deleteMany({
       where: {
         ownerId: ownerId,
@@ -333,7 +435,7 @@ export const ProductService = {
     });
 
     const response: ResponseInterface<null> = {
-      message: "Product Deleted Succesfully",
+      message: "Products Deleted Succesfully",
       status: 1,
     };
 
@@ -341,19 +443,34 @@ export const ProductService = {
   },
 
   //delete a product with a id
-
   async deleteProductById(id: number) {
-    const result = await prisma.product.delete({
-      where: {
-        id: id,
-      },
+    // Validate that product exists and is available
+    const product = await prisma.product.findUnique({
+      where: { id: id },
     });
 
-    const response: ResponseInterface<null> = {
-      message: "Product Deleted Succesfully",
-      status: 1,
-    };
+    if (!product) {
+      const response: ResponseInterface<null> = {
+        message: "Product not found",
+        status: 0,
+        data: null,
+      };
+      return response;
+    }
+  else {
+      const result = await prisma.product.delete({
+        where: {
+          id: id,
+        },
+      });
 
-    return response;
+      const response: ResponseInterface<Product> = {
+        message: "Product Deleted Succesfully",
+        status: 1,
+        data: result,
+      };
+
+      return response;
+    }
   },
 };
