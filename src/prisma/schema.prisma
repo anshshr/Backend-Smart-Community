@@ -72,8 +72,8 @@ model Chat {
   productId  Int
   senderId   Int
   receiverId Int
-  message    String
-  images     String[]
+  message    String?
+  images     String[] @default([])
   createdAt  DateTime @default(now())
   product    Product  @relation(fields: [productId], references: [id])
   receiver   User     @relation("Receiver", fields: [receiverId], references: [id])
