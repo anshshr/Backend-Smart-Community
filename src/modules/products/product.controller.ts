@@ -1,5 +1,6 @@
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
+import getBoundingBox from "../../core/utility/bounding_box.js";
 import {
   PaymentStatus,
   ProductStatus,
@@ -141,28 +142,25 @@ export const ProductController = {
       const result = productSchema.safeParse(req.body);
 
       if (result.success) {
-        // const userId = (req as any).user?.id;
+        const userId = (req as any).userId;
 
-        // if (!userId) {
-        //   const ans: ResponseInterface<null> = {
-        //     message: "User not authenticated",
-        //     status: 0,
-        //   };
-        //   return res.status(401).json(ans);
-        // }
+        if (!userId) {
+          const ans: ResponseInterface<null> = {
+            message: "User not authenticated",
+            status: 0,
+          };
+          return res.status(401).json(ans);
+        }
 
         const response = await ProductService.createProduct(
           result.data,
-          // userId,
-          10,
+          userId,
         );
         return res.status(201).json(response);
       } else {
         throw result.error;
       }
     } catch (error) {
-      console.log(error);
-
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,

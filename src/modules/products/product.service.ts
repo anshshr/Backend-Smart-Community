@@ -2,6 +2,7 @@ import { prisma } from "../../config/prisma.js";
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
+import { sendNotification } from "../../core/utility/notification.js";
 import {
   ProductStatus,
   RequestStatus,
@@ -146,8 +147,45 @@ export const ProductService = {
       },
     });
 
+    // braodcast notification to all the nearby people in a 5 km radius using the reddis queue
+    // getting the nearby coordinates
+    const box = getBoundingBox(product.latitude, product.longitude, 5);
+
+    //finding the product in the nearby location and their users
+    const users = await prisma.user.findMany({
+      where: {
+        allowNotifications: true,
+        products: {
+          some: {
+            latitude: {
+              gte: box.minLat,
+              lte: box.maxLat,
+            },
+            longitude: {
+              gte: box.minLng,
+              lte: box.maxLng,
+            },
+          },
+        },
+      },
+    });
+
+    // send a notification and add a entry on the database (we have to optimize through the reddis queue implementation)
+    users.forEach((u) => {
+      sendNotification(product.name, product.description, u.token, "");
+      const notifcation = prisma.notification.create({
+        data: {
+          title: product.name,
+          body: product.description,
+          images: product.images,
+          userId: u.id,
+        },
+      });
+    });
+
     const response: ResponseInterface<{ Product: ProductDTO }> = {
-      message: "Product Created Succesfully",
+      message:
+        "Product Created Succesfully and all the nearby users are also notified",
       status: 1,
       data: {
         Product: product,
@@ -456,8 +494,7 @@ export const ProductService = {
         data: null,
       };
       return response;
-    }
-  else {
+    } else {
       const result = await prisma.product.delete({
         where: {
           id: id,

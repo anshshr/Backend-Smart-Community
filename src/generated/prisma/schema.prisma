@@ -8,20 +8,21 @@ datasource db {
 }
 
 model User {
-  id            Int                @id @default(autoincrement())
-  email         String             @unique
-  password      String
-  username      String?            @unique
-  profileImage  String?            @default("")
-  visibility    UserVisibility?    @default(PUBLIC)
-  chatsRecv     Chat[]             @relation("Receiver")
-  chatsSent     Chat[]             @relation("Sender")
-  notifications NotificationUser[]
-  products      Product[]
-  sales         Purchase[]         @relation("Owner")
-  purchases     Purchase[]         @relation("Purchaser")
-  requests      PurchaseRequest[]
-  fcmtokens     FCMTokens[]
+  id                 Int               @id @default(autoincrement())
+  email              String            @unique
+  password           String
+  username           String?           @unique
+  allowNotifications Boolean           @default(true)
+  profileImage       String?           @default("")
+  visibility         UserVisibility?   @default(PUBLIC)
+  chatsRecv          Chat[]            @relation("Receiver")
+  chatsSent          Chat[]            @relation("Sender")
+  products           Product[]
+  sales              Purchase[]        @relation("Owner")
+  purchases          Purchase[]        @relation("Purchaser")
+  requests           PurchaseRequest[]
+  token              String            @default("")
+  notifications      Notification[]
 }
 
 model Product {
@@ -72,8 +73,8 @@ model Chat {
   productId  Int
   senderId   Int
   receiverId Int
-  message    String
-  images     String[]
+  message    String?
+  images     String[] @default([])
   createdAt  DateTime @default(now())
   product    Product  @relation(fields: [productId], references: [id])
   receiver   User     @relation("Receiver", fields: [receiverId], references: [id])
@@ -81,29 +82,13 @@ model Chat {
 }
 
 model Notification {
-  id        Int                @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   body      String
   images    String[]
-  createdAt DateTime           @default(now())
-  users     NotificationUser[]
-}
-
-model NotificationUser {
-  userId         Int
-  notificationId Int
-  notification   Notification @relation(fields: [notificationId], references: [id])
-  user           User         @relation(fields: [userId], references: [id])
-
-  @@id([userId, notificationId])
-}
-
-model FCMTokens {
-  id    Int    @id @default(autoincrement())
-  token String
-  user  User   @relation(fields: [userId], references: [id])
-
-  userId Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 enum UserVisibility {

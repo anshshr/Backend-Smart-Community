@@ -46,7 +46,6 @@ export const ChatController = {
                 receiverId: z.coerce.number("Please Provide the receiver Id"),
             });
             const result = message.safeParse(req.query);
-            console.log(result);
             if (result.success) {
                 const { productId, senderId, receiverId } = result.data;
                 const response = await ChatService.getMessages(productId, senderId, receiverId);
