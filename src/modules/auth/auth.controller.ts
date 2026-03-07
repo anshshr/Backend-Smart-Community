@@ -20,12 +20,15 @@ export const AuthController = {
             message:
               "Password must contain at least one uppercase, lowercase, number, and special character",
           }),
+        token: z.string(
+          "User FCM token is required for sending the notifications",
+        ),
       });
       const result = user.safeParse(req.body);
 
       if (result.success) {
-        const { email, password } = req.body;
-        const resposne = await AuthService.registerUser(email, password);
+        const { email, password, token } = req.body;
+        const resposne = await AuthService.registerUser(email, password, token);
 
         return res.status(200).json(resposne);
       } else {

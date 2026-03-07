@@ -1,4 +1,5 @@
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
+import getBoundingBox from "../../core/utility/bounding_box.js";
 import { PaymentStatus, ProductStatus, RequestStatus, } from "../../generated/prisma/client.js";
 import { ProductService } from "./product.service.js";
 import * as z from "zod";
@@ -117,17 +118,15 @@ export const ProductController = {
             });
             const result = productSchema.safeParse(req.body);
             if (result.success) {
-                // const userId = (req as any).user?.id;
-                // if (!userId) {
-                //   const ans: ResponseInterface<null> = {
-                //     message: "User not authenticated",
-                //     status: 0,
-                //   };
-                //   return res.status(401).json(ans);
-                // }
-                const response = await ProductService.createProduct(result.data, 
-                // userId,
-                10);
+                const userId = req.userId;
+                if (!userId) {
+                    const ans = {
+                        message: "User not authenticated",
+                        status: 0,
+                    };
+                    return res.status(401).json(ans);
+                }
+                const response = await ProductService.createProduct(result.data, userId);
                 return res.status(201).json(response);
             }
             else {
@@ -135,7 +134,6 @@ export const ProductController = {
             }
         }
         catch (error) {
-            console.log(error);
             const ans = {
                 message: "Error Occured",
                 status: 0,

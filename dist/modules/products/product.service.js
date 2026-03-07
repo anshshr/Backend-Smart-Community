@@ -1,6 +1,8 @@
 import { prisma } from "../../config/prisma.js";
+import notificationQueue from "../../config/redis.js";
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
+import { sendNotification } from "../../core/utility/notification.js";
 import { ProductStatus, RequestStatus, } from "../../generated/prisma/client.js";
 export const ProductService = {
     // get all the products
@@ -122,13 +124,65 @@ export const ProductService = {
                 status: ProductStatus.AVAILABLE,
             },
         });
+        // braodcast notification to all the nearby people in a 5 km radius using the reddis queue
+        // getting the nearby coordinates
+        const box = getBoundingBox(product.latitude, product.longitude, 5);
+        //finding the product in the nearby location and their users
+        const users = await prisma.user.findMany({
+            where: {
+                allowNotifications: true,
+                products: {
+                    some: {
+                        latitude: {
+                            gte: box.minLat,
+                            lte: box.maxLat,
+                        },
+                        longitude: {
+                            gte: box.minLng,
+                            lte: box.maxLng,
+                        },
+                    },
+                },
+            },
+        });
+        // send a notification and add a entry on the database (we have to optimize through the reddis queue implementation)
+        users.forEach((u) => {
+            // // await is missing
+            // sendNotification(product.name, product.description, u.token, "");
+            // trying to implemenet this using the message queue
+            // 1. adding all the elements in the queue
+            notificationQueue.add({
+                title: product.name,
+                body: product.description,
+                screen: "product-screen", // right now it is static will replace it to the actual products screen once the application is created
+                token: u.token,
+            }, {
+                attempts: 3,
+                delay: 1000,
+            });
+            const notifcation = prisma.notification.create({
+                data: {
+                    title: product.name,
+                    body: product.description,
+                    images: product.images,
+                    userId: u.id,
+                },
+            });
+        });
+        notificationQueue.process(async (job) => {
+            console.log(job);
+            await sendNotification(job.data.title, job.data.body, job.data.token, job.data.screen);
+        });
         const response = {
-            message: "Product Created Succesfully",
+            message: "Product Created Succesfully and all the nearby users are also notified",
             status: 1,
             data: {
                 Product: product,
             },
         };
+        notificationQueue.process(async (job) => {
+            // await sendNotification(job.data.name, job.data.description, jobdtaa.token, "")
+        });
         return response;
     },
     // requesting purchasing  a product and sending the notification

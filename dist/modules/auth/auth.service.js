@@ -4,11 +4,12 @@ import { hashPassword } from "../../utils/password_hash.js";
 import "dotenv/config.js";
 export const AuthService = {
     //register user
-    async registerUser(email, password) {
+    async registerUser(email, password, FCMToken) {
         const res = await prisma.user.create({
             data: {
                 email: email,
                 password: await hashPassword(password),
+                token: FCMToken
             },
         });
         const result = {
