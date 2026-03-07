@@ -5,18 +5,19 @@ import admin from "firebase-admin";
 import fs from "fs";
 
 // ----------- FIREBASE SERVICE ACCOUNT LOAD -----------
-const serviceAccountPath = "./serviceAccountKey.json"; // add the file to which your project is configured
+// const serviceAccountPath = "./serviceAccountKey.json"; // add the file to which your project is configured
 
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error("❌ Firebase key file not found!");
-  process.exit(1);
-}
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error("❌ Firebase key file not found!");
+//   process.exit(1);
+// }
 
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
+
 export const sendNotification = async (
   title: string,
   body: string,
