@@ -24,25 +24,25 @@ export const sendNotification = async (
   token: string,
   screen: string,
 ) => {
-  let successCount = 0;
-  let failCount = 0;
-  const message = {
-    token: token,
-    notification: { title, body },
-    data: { screen: screen, id: "123" },
-    android: {
-      priority: "high" as const,
-      collapseKey: String(Date.now()),
-      ttl: 86400 * 1000, // 24 hours in milliseconds
-      // OR ttl: "86400s"
-    },
-  };
+  // let successCount = 0;
+  // let failCount = 0;
+  // const message = {
+  //   token: token,
+  //   notification: { title, body },
+  //   data: { screen: screen, id: "123" },
+  //   android: {
+  //     priority: "high" as const,
+  //     collapseKey: String(Date.now()),
+  //     ttl: 86400 * 1000, // 24 hours in milliseconds
+  //     // OR ttl: "86400s"
+  //   },
+  // };
 
-  try {
-    await admin.messaging().send(message); // admin is coming from the firebase that my project is configured
-    successCount++;
-  } catch (err) {
-    console.error("FCM Error:", err);
-    failCount++;
-  }
+  // try {
+  //   await admin.messaging().send(message); // admin is coming from the firebase that my project is configured
+  //   successCount++;
+  // } catch (err) {
+  //   console.error("FCM Error:", err);
+  //   failCount++;
+  // }
 };
