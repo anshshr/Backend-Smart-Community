@@ -7,12 +7,12 @@ import type { ResponseInterface } from "../../core/interfaces/response_interface
 
 export const AuthService = {
   //register user
-  async registerUser(email: string, password: string, FCMToken : string) {
+  async registerUser(email: string, password: string, FCMToken: string) {
     const res = await prisma.user.create({
       data: {
         email: email,
         password: await hashPassword(password),
-        token  : FCMToken
+        token: FCMToken,
       },
     });
 
@@ -24,7 +24,7 @@ export const AuthService = {
   },
 
   //login user
-  async loginUser(username: string, email: string, password: string ) {
+  async loginUser(username: string, email: string, password: string) {
     const registeredUser = await prisma.user.findUnique({
       where: {
         email: email,
@@ -34,8 +34,8 @@ export const AuthService = {
     if (registeredUser != null) {
       const token = jwt.sign(
         {
+          id: registeredUser.id,
           email: email,
-          password: password,
         },
         process.env.JWT_SECRET || "ANSH",
       );

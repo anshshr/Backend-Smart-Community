@@ -4,36 +4,35 @@
 import admin from "firebase-admin";
 import fs from "fs";
 // ----------- FIREBASE SERVICE ACCOUNT LOAD -----------
-const serviceAccountPath = "./serviceAccountKey.json"; // add the file to which your project is configured
-if (!fs.existsSync(serviceAccountPath)) {
-    console.error("❌ Firebase key file not found!");
-    process.exit(1);
-}
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-});
+// const serviceAccountPath = "./serviceAccountKey.json"; // add the file to which your project is configured
+// if (!fs.existsSync(serviceAccountPath)) {
+//   console.error("❌ Firebase key file not found!");
+//   process.exit(1);
+// }
+// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
 export const sendNotification = async (title, body, token, screen) => {
-    let successCount = 0;
-    let failCount = 0;
-    const message = {
-        token: token,
-        notification: { title, body },
-        data: { screen: screen, id: "123" },
-        android: {
-            priority: "high",
-            collapseKey: String(Date.now()),
-            ttl: 86400 * 1000, // 24 hours in milliseconds
-            // OR ttl: "86400s"
-        },
-    };
-    try {
-        await admin.messaging().send(message); // admin is coming from the firebase that my project is configured
-        successCount++;
-    }
-    catch (err) {
-        console.error("FCM Error:", err);
-        failCount++;
-    }
+    // let successCount = 0;
+    // let failCount = 0;
+    // const message = {
+    //   token: token,
+    //   notification: { title, body },
+    //   data: { screen: screen, id: "123" },
+    //   android: {
+    //     priority: "high" as const,
+    //     collapseKey: String(Date.now()),
+    //     ttl: 86400 * 1000, // 24 hours in milliseconds
+    //     // OR ttl: "86400s"
+    //   },
+    // };
+    // try {
+    //   await admin.messaging().send(message); // admin is coming from the firebase that my project is configured
+    //   successCount++;
+    // } catch (err) {
+    //   console.error("FCM Error:", err);
+    //   failCount++;
+    // }
 };
 //# sourceMappingURL=notification.js.map
