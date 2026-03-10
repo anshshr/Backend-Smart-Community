@@ -1,12 +1,17 @@
 import express, { urlencoded } from "express";
 import router from "./routes.js";
 import { pinoHttp } from "pino-http";
-import type { ResponseInterface } from "./core/interfaces/response_interface.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "server is running fine",
+  });
+});
 app.get("/health", (req, res) => {
   res.send("healthy");
 });
