@@ -5,9 +5,9 @@ export declare const ProductService: {
     getAllProducts(): Promise<ResponseInterface<{
         Products: Product[];
     }>>;
-    getByParticularId(id: number): Promise<ResponseInterface<null> | ResponseInterface<{
+    getByParticularId(id: number): Promise<ResponseInterface<{
         product: Product;
-    }>>;
+    }> | ResponseInterface<null>>;
     getNearByProducts(latitude: number, longitude: number): Promise<ResponseInterface<{
         Products: Product[];
     }>>;
@@ -17,9 +17,9 @@ export declare const ProductService: {
     createProduct(product: ProductDTO, ownerId: number): Promise<ResponseInterface<{
         Product: ProductDTO;
     }>>;
-    requestPurchase(productId: number, requesterId: number, amount?: number, message?: string): Promise<ResponseInterface<null> | ResponseInterface<string> | ResponseInterface<{
+    requestPurchase(productId: number, requesterId: number, amount?: number, message?: string): Promise<ResponseInterface<null> | ResponseInterface<{
         request: PurchaseRequest;
-    }>>;
+    }> | ResponseInterface<string>>;
     updatePurchaseProduct(UpdatedStatus: RequestStatus, productId: number): Promise<ResponseInterface<null>>;
     purchaseProduct(productId: number, purchaserId: number, ownerId: number, paymentAmount: number, paymentMethod: string, paymentStatus: PaymentStatus): Promise<ResponseInterface<null> | ResponseInterface<{
         purchase: Purchase;

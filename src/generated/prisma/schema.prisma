@@ -21,7 +21,7 @@ model User {
   sales              Purchase[]        @relation("Owner")
   purchases          Purchase[]        @relation("Purchaser")
   requests           PurchaseRequest[]
-  token              String            @default("")
+  token              String
   notifications      Notification[]
 }
 

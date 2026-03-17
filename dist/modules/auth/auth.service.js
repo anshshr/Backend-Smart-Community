@@ -9,7 +9,7 @@ export const AuthService = {
             data: {
                 email: email,
                 password: await hashPassword(password),
-                token: FCMToken
+                token: FCMToken,
             },
         });
         const result = {
@@ -27,8 +27,8 @@ export const AuthService = {
         });
         if (registeredUser != null) {
             const token = jwt.sign({
+                id: registeredUser.id,
                 email: email,
-                password: password,
             }, process.env.JWT_SECRET || "ANSH");
             const response = {
                 message: "Login Succesfull",

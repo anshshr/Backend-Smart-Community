@@ -1,8 +1,8 @@
 import { Router } from "express";
-import authRouter from "./modules/auth/auth.routes.js";
 import ProductRouter from "./modules/products/product.route.js";
 import chatRouter from "./modules/chats/chats.routes.js";
 import { appMiddleware } from "./middlewares/app.middleware.js";
+import authRouter from "./modules/auth/auth.routes.js";
 
 const router = Router();
 

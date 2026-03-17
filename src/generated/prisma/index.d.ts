@@ -9325,7 +9325,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
@@ -9343,7 +9343,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
@@ -9396,7 +9396,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -11683,7 +11683,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
@@ -11700,7 +11700,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
@@ -11878,7 +11878,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
@@ -11895,7 +11895,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
@@ -11950,7 +11950,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
@@ -11967,7 +11967,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
@@ -12150,7 +12150,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
@@ -12167,7 +12167,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
@@ -12306,7 +12306,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
@@ -12323,7 +12323,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
@@ -12344,7 +12344,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     products?: ProductCreateNestedManyWithoutOwnerInput
     sales?: PurchaseCreateNestedManyWithoutOwnerInput
@@ -12361,7 +12361,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
     sales?: PurchaseUncheckedCreateNestedManyWithoutOwnerInput
@@ -12510,7 +12510,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatCreateNestedManyWithoutSenderInput
     products?: ProductCreateNestedManyWithoutOwnerInput
@@ -12527,7 +12527,7 @@ export namespace Prisma {
     allowNotifications?: boolean
     profileImage?: string | null
     visibility?: $Enums.UserVisibility | null
-    token?: string
+    token: string
     chatsRecv?: ChatUncheckedCreateNestedManyWithoutReceiverInput
     chatsSent?: ChatUncheckedCreateNestedManyWithoutSenderInput
     products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
