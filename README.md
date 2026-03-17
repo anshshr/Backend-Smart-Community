@@ -14,6 +14,7 @@ It includes authentication, product listing and purchase flow, location-based pr
 - Prisma ORM with PostgreSQL and generated client.
 - Redis + Bull queue integration for async notifications.
 - Zod validation for request payloads and query params.
+- Monitoring stack configured with Prometheus + Grafana via Docker Compose.
 
 ## Tech Stack
 
@@ -26,6 +27,7 @@ It includes authentication, product listing and purchase flow, location-based pr
 - Validation: Zod
 - Queue: Bull
 - Redis: redis
+- Monitoring: Prometheus + Grafana
 - Logging: pino + pino-http
 - Notifications: firebase-admin (notification utility scaffolded)
 
@@ -69,6 +71,30 @@ backend/
 
 - `GET /` -> server status JSON
 - `GET /health` -> `healthy`
+
+## Monitoring and Observability
+
+This project includes a basic monitoring setup using Prometheus and Grafana.
+
+- Prometheus runs on port `9090` and scrapes application metrics.
+- Grafana runs on port `3001` (mapped to Grafana internal port `3000`).
+- Both services are orchestrated through `docker-compose.yaml`.
+
+Monitoring files:
+
+- `docker-compose.yaml` -> starts Prometheus and Grafana containers.
+- `prometheus.yaml` -> scrape configuration for the Node.js backend target.
+
+Start monitoring services:
+
+```bash
+docker-compose up -d
+```
+
+Open dashboards and metrics:
+
+- Grafana UI: `http://localhost:3001`
+- Prometheus UI: `http://localhost:9090`
 
 ## Feature Modules
 
@@ -171,6 +197,12 @@ npx prisma generate
 npm run dev
 ```
 
+5. (Optional) Start monitoring stack
+
+```bash
+docker-compose up -d
+```
+
 Server starts on port `3000`.
 
 ## Useful Commands
@@ -179,6 +211,7 @@ Server starts on port `3000`.
 npm run dev
 npx prisma migrate dev --name <migration_name>
 npx prisma generate
+docker-compose up -d
 ```
 
 ## Notes
@@ -186,11 +219,4 @@ npx prisma generate
 - Auth middleware is applied after `/auth` routes, so product/chat routes require valid bearer token.
 - Logging currently uses `pino-http` with `level: silent`.
 - This codebase already includes Prisma migrations in `prisma/migrations`.
-
-## Future Improvements
-
-- Add refresh token flow and proper logout token invalidation.
-- Add centralized error middleware.
-- Add automated tests for auth/product/chat modules.
-- Complete Firebase push integration and retry strategy.
-- Add API docs (Swagger/OpenAPI).
+- Monitoring setup is containerized and can be started independently using Docker Compose.
