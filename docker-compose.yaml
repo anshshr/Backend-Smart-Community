@@ -1,17 +1,26 @@
-version: "4"
+version: "3"
 
 services:
-
+  # actual applicaton service
   smart-community :
     image: anshshr/smart-community  
     ports:
       - 3000:3000  
+
+    # prometheus server for the moritoring
   prom-server:
     image: prom/prometheus
     ports:
       - 9090:9090
 
+  # grafana server for the dashboard creation
   grafana-server:
     image: grafana/grafana
     ports:
       - 3001:3000
+
+  # redis server for the message queue
+  redis-server:
+    image : redis
+    ports:
+      - 6379:6379

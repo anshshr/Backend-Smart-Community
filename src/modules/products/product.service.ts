@@ -1,5 +1,5 @@
 import { prisma } from "../../config/prisma.js";
-import notificationQueue from "../../config/redis.js";
+import { DLQ , notificationQueue } from "../../config/redis.js";
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
 import getBoundingBox from "../../core/utility/bounding_box.js";
@@ -173,8 +173,6 @@ export const ProductService = {
 
     // send a notification and add a entry on the database (we have to optimize through the reddis queue implementation)
     users.forEach((u) => {
-      // // await is missing
-      // sendNotification(product.name, product.description, u.token, "");
       // trying to implemenet this using the message queue
       // 1. adding all the elements in the queue
       notificationQueue.add(
@@ -185,10 +183,12 @@ export const ProductService = {
           token: u.token,
         },
         {
-          attempts: 3,
+          attempts: 2,
           delay: 1000,
         },
       );
+
+      // storing all the notifications to the user
       const notifcation = prisma.notification.create({
         data: {
           title: product.name,
@@ -199,14 +199,20 @@ export const ProductService = {
       });
     });
 
-    notificationQueue.process(async (job) => {
-      console.log(job);
-      await sendNotification(
-        job.data.title,
-        job.data.body,
-        job.data.token,
-        job.data.screen,
-      );
+    // processing all the elements form the queue
+    notificationQueue.process(async (job: any) => {
+      try {
+        await sendNotification(
+          job.data.title,
+          job.data.body,
+          job.data.token,
+          job.data.screen,
+        );
+      } catch (error) {
+        // putting the failed jobs in the dead letter queue
+        DLQ.add(job);
+        throw error;
+      }
     });
 
     const response: ResponseInterface<{ Product: ProductDTO }> = {
@@ -217,9 +223,6 @@ export const ProductService = {
         Product: product,
       },
     };
-    notificationQueue.process(async (job) => {
-      // await sendNotification(job.data.name, job.data.description, jobdtaa.token, "")
-    });
     return response;
   },
 
