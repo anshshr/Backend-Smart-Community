@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "dev": "npm run start && npm run dev",
     "lint": "eslint .",
-    "lint:fix" : "eslint --fix ."
+    "lint:fix": "eslint --fix ."
   },
   "keywords": [],
   "author": "",
