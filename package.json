@@ -5,27 +5,21 @@
   "main": "index.js",
   "exports": "./backend",
   "scripts": {
-    "build": "npx tsc -b",
+    "build": "npx tsc -b && node scripts/copy-generated-prisma.mjs",
     "start": "node dist/server.js",
-    "dev": "npm run start && npm run dev",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "dev": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
-    "eslint": "^10.1.0",
     "globals": "^17.4.0",
-    "jiti": "^2.6.1",
     "prisma": "^7.4.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.2"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.0",

@@ -40,12 +40,10 @@ app.get("/metrics", async (req, res) => {
 });
 
 // http logger
-app.use(
-  pinoHttp({
-    level: "silent",
-  }),
-);
-
-app.use("/api/v1", router);
+app.use;
+(pinoHttp({
+  level: "silent",
+}),
+  app.use("/api/v1", router));
 
 export default app;
