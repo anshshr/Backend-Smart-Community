@@ -10,7 +10,7 @@ export const appMiddleware = (req, res, next) => {
         return res.status(401).json(response);
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "ANSH");
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "");
         req.id = decoded.id;
         next();
     }

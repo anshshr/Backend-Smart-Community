@@ -437,6 +437,7 @@ export const ProductService = {
         message: "Owner do not exist",
         status: 0,
       };
+      return ans;
     }
     // purchaser do not exist
     const purchaser = await prisma.user.findUnique({
@@ -449,6 +450,8 @@ export const ProductService = {
         message: "Purchaser do not exist",
         status: 0,
       };
+
+      return ans;
     }
     // owner and the purhaser id cannot be same
     if (ownerId == purchaserId) {
@@ -495,9 +498,11 @@ export const ProductService = {
         message: "Owner do not exist",
         status: 0,
       };
+
+      return ans
     }
 
-    const result = await prisma.product.deleteMany({
+     await prisma.product.deleteMany({
       where: {
         ownerId: ownerId,
       },

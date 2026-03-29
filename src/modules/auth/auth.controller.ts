@@ -20,6 +20,7 @@ export const AuthController = {
             message:
               "Password must contain at least one uppercase, lowercase, number, and special character",
           }),
+        username: z.string("Please enter your username"),
         token: z.string(
           "User FCM token is required for sending the notifications",
         ),
@@ -27,8 +28,13 @@ export const AuthController = {
       const result = user.safeParse(req.body);
 
       if (result.success) {
-        const { email, password, token } = req.body;
-        const resposne = await AuthService.registerUser(email, password, token);
+        const { email, password, token, username } = result.data;
+        const resposne = await AuthService.registerUser(
+          email,
+          password,
+          token,
+          username,
+        );
 
         return res.status(200).json(resposne);
       } else {
@@ -93,6 +99,35 @@ export const AuthController = {
         res.status(200).json(resposne);
       } else {
         res.status(401).json(resposne);
+      }
+    } catch (error) {
+      const ans: ResponseInterface<string> = {
+        message: "Some Error Occured",
+        data: "Invalid JWT",
+        status: 0,
+      };
+      res.status(401).json(ans);
+    }
+  },
+
+  //refresh token
+  async refreshTokenContorller(req: Request, res: Response) {
+    try {
+      const tokenSchema = z.object({
+        token: z.string("Please provide the refresh token"),
+      });
+
+      const result = tokenSchema.safeParse(req.body);
+
+      if (result.success) {
+        const { token } = result.data;
+
+        const response = await AuthService.refreshToken(token);
+        if (response.status) {
+          res.status(200).json(response);
+        } else {
+          res.status(500).json(response);
+        }
       }
     } catch (error) {
       const ans: ResponseInterface<string> = {

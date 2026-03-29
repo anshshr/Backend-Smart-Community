@@ -2,11 +2,13 @@ import { prisma } from "../../config/prisma.js";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../../utils/password_hash.js";
 import "dotenv/config.js";
+import { string } from "zod";
 export const AuthService = {
     //register user
-    async registerUser(email, password, FCMToken) {
+    async registerUser(email, password, FCMToken, username) {
         const res = await prisma.user.create({
             data: {
+                username: username,
                 email: email,
                 password: await hashPassword(password),
                 token: FCMToken,
@@ -26,14 +28,23 @@ export const AuthService = {
             },
         });
         if (registeredUser != null) {
-            const token = jwt.sign({
+            const accessToken = jwt.sign({
                 id: registeredUser.id,
                 email: email,
-            }, process.env.JWT_SECRET || "ANSH");
+            }, process.env.ACCESS_TOKEN_SECRET || "", {
+                expiresIn: "1 days",
+            });
+            const refreshToken = jwt.sign({
+                id: registeredUser.id,
+                email: email,
+            }, process.env.REFRESH_TOKEN_SECRET || "", {
+                expiresIn: "7 days",
+            });
             const response = {
                 message: "Login Succesfull",
                 data: {
-                    token: token,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
                 },
                 status: 1,
             };
@@ -49,7 +60,7 @@ export const AuthService = {
     },
     //logout user
     async logoutUser(token) {
-        const verify = jwt.verify(token, process.env.JWT_SECRET || "ANSH");
+        const verify = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "");
         if (verify) {
             const ans = {
                 message: "Logout Successfull",
@@ -65,5 +76,39 @@ export const AuthService = {
             return ans;
         }
     },
+    async refreshToken(token) {
+        const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET || "");
+        if (decoded) {
+            const accessToken = jwt.sign({
+                id: decoded.id,
+                email: decoded.email,
+            }, process.env.ACCESS_TOKEN_SECRET || "", {
+                expiresIn: "1 days",
+            });
+            const refreshToken = jwt.sign({
+                id: decoded.id,
+                email: decoded.email,
+            }, process.env.REFRESH_TOKEN_SECRET || "", {
+                expiresIn: "7 days",
+            });
+            const response = {
+                message: "Login Succesfull",
+                data: {
+                    email: decoded.email,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                },
+                status: 1,
+            };
+            return response;
+        }
+        else {
+            const ans = {
+                message: "Error Occured while refreshing the token",
+                status: 0,
+            };
+            return ans;
+        }
+    }
 };
 //# sourceMappingURL=auth.service.js.map

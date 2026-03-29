@@ -1,4 +1,4 @@
 import Queue from "bull";
-declare const notificationQueue: Queue.Queue<any>;
-export default notificationQueue;
+export declare const notificationQueue: Queue.Queue<any>;
+export declare const DLQ: Queue.Queue<any>;
 //# sourceMappingURL=redis.d.ts.map

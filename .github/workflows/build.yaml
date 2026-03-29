@@ -1,0 +1,38 @@
+name: Testing workflow CI/CD pipeline
+
+on:
+  push : 
+    branches: [main , dev , master]
+  pull_request : 
+    branches: [main , dev , master]
+
+
+jobs:
+  build-and-Test:
+    runs-on:  ubuntu-latest
+    steps:
+      
+      - name : Clone the code
+        uses: actions/checkout@v2
+
+      - name: Set up the node js enviroment
+        uses: actions/setup-node@v6
+        with:
+           node-version: '20'
+
+      - name: build the project
+        run: npm run build
+
+      - name: Install the dependencies
+        run: npm install
+
+      # do the linting checks
+      # run the testcases defined
+      - name: Build the gitdocker file
+        run: docker build -t anshshr/smart-community  .
+
+      - name  : Push it to docker hub
+        run: docker push anshshr/smart-community
+        
+
+  
