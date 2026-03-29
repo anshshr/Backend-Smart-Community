@@ -5,7 +5,7 @@
   "main": "index.js",
   "exports": "./backend",
   "scripts": {
-    "build": "npx tsc -b && node scripts/copy-generated-prisma.mjs",
+    "build": "npx tsc -b ",
     "start": "node dist/server.js",
     "dev": "npm run build && npm run start"
   },

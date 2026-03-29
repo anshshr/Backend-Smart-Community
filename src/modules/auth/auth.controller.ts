@@ -3,7 +3,6 @@ import { AuthService } from "./auth.service.js";
 import * as z from "zod";
 import type { Request, Response } from "express";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
-import { ZodErrorMessage } from "../../core/errors/zod-error-message.js";
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 
 export const AuthController = {
@@ -44,7 +43,6 @@ export const AuthController = {
       const ans: ResponseInterface<string> = {
         message: "Error Occured",
         status: 0,
-
         data: customErrorMessgae(error),
       };
       return res.status(500).json(ans);

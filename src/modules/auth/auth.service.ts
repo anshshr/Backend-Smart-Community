@@ -2,9 +2,8 @@ import { prisma } from "../../config/prisma.js";
 import type { User, UserVisibility } from "../../generated/prisma/client.js";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../../utils/password_hash.js";
-import "dotenv/config.js";
+import "../../config/env.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
-import { string } from "zod";
 
 export const AuthService = {
   //register user
@@ -105,64 +104,62 @@ export const AuthService = {
       return ans;
     }
   },
-  
 
-
-
-
-  async  refreshToken(token: string) {
-  const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET || "") as {
-    id: string;
-    email: string;
-  };
-
-  if (decoded) {
-    const accessToken = jwt.sign(
-      {
-        id: decoded.id,
-        email: decoded.email,
-      },
-
-      process.env.ACCESS_TOKEN_SECRET || "",
-      {
-        expiresIn: "1 days",
-      },
-    );
-    const refreshToken = jwt.sign(
-      {
-        id: decoded.id,
-        email: decoded.email,
-      },
-
+  async refreshToken(token: string) {
+    const decoded = jwt.verify(
+      token,
       process.env.REFRESH_TOKEN_SECRET || "",
-      {
-        expiresIn: "7 days",
-      },
-    );
-
-    const response: ResponseInterface<{
-      accessToken: string;
-      refreshToken: string;
+    ) as {
+      id: string;
       email: string;
-    }> = {
-      message: "Login Succesfull",
-      data: {
-        email: decoded.email,
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      },
-      status: 1,
     };
 
-    return response;
-  } else {
-    const ans: ResponseInterface<null> = {
-      message: "Error Occured while refreshing the token",
-      status: 0,
-    };
+    if (decoded) {
+      const accessToken = jwt.sign(
+        {
+          id: decoded.id,
+          email: decoded.email,
+        },
 
-    return ans;
-  }
-  }
+        process.env.ACCESS_TOKEN_SECRET || "",
+        {
+          expiresIn: "1 days",
+        },
+      );
+      const refreshToken = jwt.sign(
+        {
+          id: decoded.id,
+          email: decoded.email,
+        },
+
+        process.env.REFRESH_TOKEN_SECRET || "",
+        {
+          expiresIn: "7 days",
+        },
+      );
+
+      const response: ResponseInterface<{
+        accessToken: string;
+        refreshToken: string;
+        email: string;
+      }> = {
+        message: "Login Succesfull",
+        data: {
+          email: decoded.email,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        },
+        status: 1,
+      };
+
+      return response;
+    } else {
+      const ans: ResponseInterface<null> = {
+        message: "Error Occured while refreshing the token",
+        status: 0,
+      };
+
+      return ans;
+    }
+  },
 };
-

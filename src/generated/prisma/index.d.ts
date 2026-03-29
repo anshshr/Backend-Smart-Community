@@ -8896,11 +8896,11 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
-    username?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    username?: StringNullableFilter<"User"> | string | null
     allowNotifications?: BoolFilter<"User"> | boolean
     profileImage?: StringNullableFilter<"User"> | string | null
     visibility?: EnumUserVisibilityNullableFilter<"User"> | $Enums.UserVisibility | null
@@ -8912,7 +8912,7 @@ export namespace Prisma {
     purchases?: PurchaseListRelationFilter
     requests?: PurchaseRequestListRelationFilter
     notifications?: NotificationListRelationFilter
-  }, "id" | "email" | "username">
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder

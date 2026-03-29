@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import type { ResponseInterface } from "../core/interfaces/response_interface.js";
 import jwt from "jsonwebtoken";
+import "../config/env.js";
 
 export const appMiddleware = (
   req: Request,
@@ -19,7 +20,10 @@ export const appMiddleware = (
     return res.status(401).json(response);
   }
   try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "") as {
+    const decoded = jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET || "",
+    ) as {
       id: number;
       email: string;
     };
