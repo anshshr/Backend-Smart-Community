@@ -1,11 +1,7 @@
 import { customErrorMessgae } from "../../core/errors/custom-error-message.js";
 import type { ResponseInterface } from "../../core/interfaces/response_interface.js";
-import getBoundingBox from "../../core/utility/bounding_box.js";
-import {
-  PaymentStatus,
-  ProductStatus,
-  RequestStatus,
-} from "../../generated/prisma/client.js";
+import { PaymentStatus, ProductStatus, RequestStatus } from "../../generated/prisma/index.js";
+
 import { ProductService } from "./product.service.js";
 import type { Request, Response } from "express";
 import * as z from "zod";
