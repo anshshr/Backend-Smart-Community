@@ -20,15 +20,15 @@ jobs:
         with:
            node-version: '20'
 
-      - name: build the project
-        run: npm run build
-
       - name: Install the dependencies
         run: npm install
 
+      - name: build the project
+        run: npm run build
+
       # do the linting checks
       # run the testcases defined
-      - name: Build the gitdocker file
+      - name: Build the docker file
         run: docker build -t anshshr/smart-community  .
 
       - name  : Push it to docker hub
