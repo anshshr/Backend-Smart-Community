@@ -26,8 +26,6 @@ jobs:
       - name: build the project
         run: npm run build
 
-      # do the linting checks
-      # run the testcases defined
       - name: Build the docker file
         run: docker build -t anshshr/smart-community  .
 
