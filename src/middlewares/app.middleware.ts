@@ -27,7 +27,18 @@ export const appMiddleware = (
       id: number;
       email: string;
     };
+
+    if (!decoded) {
+      const ans: ResponseInterface<null> = {
+        message:
+          "Token verification failed or you may be forbidden to access this endpoint",
+        status: 0,
+      };
+      res.status(403).json(ans);
+    }
+
     req.id = decoded.id;
+    console.log("i ma from the middleware", req.id);
     next();
   } catch (error) {
     const ans: ResponseInterface<null> = {

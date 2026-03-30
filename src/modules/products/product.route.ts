@@ -12,6 +12,6 @@ ProductRouter.post("/request", ProductController.requestPurchase); //✅ - worki
 ProductRouter.patch("/update", ProductController.updatePurchaseProduct); //✅
 ProductRouter.post("/purchase", ProductController.purchaseProduct); //✅
 ProductRouter.delete("/owner/:ownerId", ProductController.deleteAll);
-ProductRouter.delete("/:id", ProductController.deleteProductById);
+ProductRouter.delete("/:productId", ProductController.deleteProductById);
 
 export default ProductRouter;

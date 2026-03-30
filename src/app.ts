@@ -2,11 +2,13 @@ import express, { urlencoded } from "express";
 import router from "./routes.js";
 import { pinoHttp } from "pino-http";
 import { httpRequestCounter, register } from "./config/prometheus.js";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
+app.use(cors());
 
 // monitoring the endpoints
 app.use((req, res, next) => {
@@ -39,11 +41,6 @@ app.get("/metrics", async (req, res) => {
   res.send(metrics);
 });
 
-// http logger
-app.use;
-(pinoHttp({
-  level: "silent",
-}),
-  app.use("/api/v1", router));
+app.use("/api/v1", router);
 
 export default app;

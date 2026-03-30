@@ -141,7 +141,7 @@ export const ProductController = {
       const result = productSchema.safeParse(req.body);
 
       if (result.success) {
-        const userId = (req as any).userId;
+        const userId = (req as any).id;
 
         if (!userId) {
           const ans: ResponseInterface<null> = {
@@ -333,14 +333,16 @@ export const ProductController = {
 
   async deleteProductById(req: Request, res: Response) {
     try {
+      console.log(req.params.id);
+      console.log(req.query);
       const product = z.object({
-        id: z.coerce.number("Provide the Product Id"),
+        productId: z.coerce.number("Provide the Product Id"),
       });
 
       const result = product.safeParse(req.params);
       if (result.success) {
-        const { id } = result.data;
-        const response = await ProductService.deleteProductById(id);
+        const { productId } = result.data;
+        const response = await ProductService.deleteProductById(productId);
 
         if (response.status) {
           return res.status(200).json(response);

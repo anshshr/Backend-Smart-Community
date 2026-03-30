@@ -14,6 +14,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
     "globals": "^17.4.0",
@@ -32,6 +33,7 @@
     "@types/pino-http": "^5.8.4",
     "bcrypt": "^6.0.0",
     "bull": "^4.16.5",
+    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "firebase-admin": "^13.7.0",
