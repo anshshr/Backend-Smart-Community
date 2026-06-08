@@ -220,3 +220,26 @@ docker-compose up -d
 - Logging currently uses `pino-http` with `level: silent`.
 - This codebase already includes Prisma migrations in `prisma/migrations`.
 - Monitoring setup is containerized and can be started independently using Docker Compose.
+
+## Minimal React Frontend
+
+A minimal React frontend is available at `/frontend` and is aligned with the backend modules:
+
+- System endpoints: `/`, `/health`, `/metrics`
+- Auth module: register, login, logout, refresh token
+- Product module: list, read, nearest, filter, create, request, update, purchase, delete
+- Chat module: send and get messages
+
+### Run frontend locally
+
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
+```
+
+The frontend uses:
+
+- `VITE_SERVER_BASE_URL` (default: `http://localhost:3000`)
+- `VITE_API_BASE_URL` (optional, default: `${VITE_SERVER_BASE_URL}/api/v1`)
