@@ -10,7 +10,9 @@ app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: true, // Allow requests with credentials (cookies, authorization headers, etc.)
+    origin: [
+      "https://id-preview-419d383d--c58a3479-bbaa-4f5b-b8d2-1dadcdd46491.lovable.app",
+    ], // Allow requests with credentials (cookies, authorization headers, etc.)
     credentials: true, // Allow cookies to be sent in cross-origin requests
   }),
 );
