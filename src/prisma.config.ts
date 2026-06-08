@@ -1,7 +1,8 @@
+import { AppConfig } from "./config/config.js";
 import "./config/env.js";
 import { defineConfig } from "prisma/config";
 
-const URL = process.env.DATABASE_URL;
+const URL = AppConfig.DATABASE_URL;
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
