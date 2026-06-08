@@ -8,7 +8,12 @@ const app = express();
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: true, // Allow requests with credentials (cookies, authorization headers, etc.)
+    credentials: true, // Allow cookies to be sent in cross-origin requests
+  }),
+);
 
 // monitoring the endpoints
 app.use((req, res, next) => {
