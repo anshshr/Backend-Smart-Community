@@ -12,6 +12,7 @@ app.use(
   cors({
     origin: [
       "https://id-preview-419d383d--c58a3479-bbaa-4f5b-b8d2-1dadcdd46491.lovable.app",
+      "https://preview--local-nexus-73.lovable.app"
     ], // Allow requests with credentials (cookies, authorization headers, etc.)
     credentials: true, // Allow cookies to be sent in cross-origin requests
   }),
